@@ -1,5 +1,7 @@
-using System;
-using System.Collections;
+#if USN_USE_ASYNC_METHODS
+using Cysharp.Threading.Tasks;
+#endif
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Modal;
@@ -21,7 +23,15 @@ namespace Demo.Scripts
             _characterId = characterId;
             SetupTransitionAnimations(index);
         }
-
+#if USN_USE_ASYNC_METHODS
+        public override UniTask Initialize()
+        {
+            var key = ResourceKey.CharacterThumbnailSprite(_characterId, 1);
+            _thumbnailImage.sprite = Resources.Load<Sprite>(key);
+            _firstThumbButton.onClick.AddListener(OnFirstThumbButtonClicked);
+            return UniTask.CompletedTask;
+        }
+#else
         public override IEnumerator Initialize()
         {
             var key = ResourceKey.CharacterThumbnailSprite(_characterId, 1);
@@ -29,7 +39,7 @@ namespace Demo.Scripts
             _firstThumbButton.onClick.AddListener(OnFirstThumbButtonClicked);
             yield break;
         }
-
+#endif
         private void SetupTransitionAnimations(int index)
         {
             string beforeSheetIdentifierRegex;
@@ -86,12 +96,19 @@ namespace Demo.Scripts
             AnimationContainer.ExitAnimations.Add(exitAnimation2);
         }
 
+#if USN_USE_ASYNC_METHODS
+        public override UniTask Cleanup()
+        {
+            _firstThumbButton.onClick.RemoveListener(OnFirstThumbButtonClicked);
+            return UniTask.CompletedTask;
+        }
+#else
         public override IEnumerator Cleanup()
         {
             _firstThumbButton.onClick.RemoveListener(OnFirstThumbButtonClicked);
             yield break;
         }
-
+#endif
         private void OnFirstThumbButtonClicked()
         {
             var modalContainer = ModalContainer.Find(ContainerKey.MainModalContainer);
