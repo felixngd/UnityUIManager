@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityScreenNavigator.Runtime.Core.Shared;
+using UnityScreenNavigator.Runtime.Core.Shared.Views;
 using UnityScreenNavigator.Runtime.Foundation;
 using UnityScreenNavigator.Runtime.Foundation.Animation;
 using UnityScreenNavigator.Runtime.Foundation.Coroutine;
@@ -15,7 +15,7 @@ using Cysharp.Threading.Tasks;
 namespace UnityScreenNavigator.Runtime.Core.Modal
 {
     [DisallowMultipleComponent]
-    public class Modal : MonoBehaviour, IModalLifecycleEvent
+    public class Modal : ContainerBase, IModalLifecycleEvent
     {
         [SerializeField] private bool _usePrefabNameAsIdentifier = true;
 
@@ -25,25 +25,26 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
         [SerializeField]
         private ModalTransitionAnimationContainer _animationContainer = new ModalTransitionAnimationContainer();
 
-        private CanvasGroup _canvasGroup;
-        private RectTransform _parentTransform;
-        private RectTransform _rectTransform;
+        // private CanvasGroup _canvasGroup;
+        // private RectTransform _parentTransform;
+        // private RectTransform _rectTransform;
 
         private readonly PriorityList<IModalLifecycleEvent> _lifecycleEvents = new PriorityList<IModalLifecycleEvent>();
 
-        public string Identifier
+        public override string Identifier
         {
             get => _identifier;
             set => _identifier = value;
         }
+        
 
         public ModalTransitionAnimationContainer AnimationContainer => _animationContainer;
 
-        public bool Interactable
-        {
-            get => _canvasGroup.interactable;
-            set => _canvasGroup.interactable = value;
-        }
+        // public bool Interactable
+        // {
+        //     get => _canvasGroup.interactable;
+        //     set => _canvasGroup.interactable = value;
+        // }
 
 #if USN_USE_ASYNC_METHODS
         public virtual UniTask Initialize()
@@ -145,13 +146,15 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
 
         internal AsyncProcessHandle AfterLoad(RectTransform parentTransform)
         {
-            _rectTransform = (RectTransform)transform;
-            _canvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
+            //_rectTransform = (RectTransform)transform;
+            //_canvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
             _lifecycleEvents.Add(this, 0);
             _identifier = _usePrefabNameAsIdentifier ? gameObject.name.Replace("(Clone)", string.Empty) : _identifier;
-            _parentTransform = parentTransform;
-            _rectTransform.FillParent(_parentTransform);
-            _canvasGroup.alpha = 0.0f;
+            //_parentTransform = parentTransform;
+            Parent = parentTransform;
+            RectTransform.FillParent((RectTransform)Parent);
+            //_canvasGroup.alpha = 0.0f;
+            Alpha = 0.0f;
 
             return CoroutineManager.Instance.Run(CreateCoroutine(_lifecycleEvents.Select(x => x.Initialize())));
         }
@@ -166,13 +169,15 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
             if (push)
             {
                 gameObject.SetActive(true);
-                _rectTransform.FillParent(_parentTransform);
-                _canvasGroup.alpha = 0.0f;
+                RectTransform.FillParent((RectTransform)Parent);
+                //_canvasGroup.alpha = 0.0f;
+                Alpha = 0.0f;
             }
 
             if (!UnityScreenNavigatorSettings.Instance.EnableInteractionInTransition)
             {
-                _canvasGroup.interactable = false;
+                //_canvasGroup.interactable = false;
+                Interactable = false;
             }
 
             var routines = push
@@ -195,7 +200,7 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
         {
             if (push)
             {
-                _canvasGroup.alpha = 1.0f;
+                Alpha = 1.0f;
 
                 if (playAnimation)
                 {
@@ -206,11 +211,11 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
                     }
 
                     anim.SetPartner(partnerModal?.transform as RectTransform);
-                    anim.Setup(_rectTransform);
+                    anim.Setup(RectTransform);
                     yield return CoroutineManager.Instance.Run(anim.CreatePlayRoutine());
                 }
 
-                _rectTransform.FillParent(_parentTransform);
+                RectTransform.FillParent((RectTransform)Parent);
             }
         }
 
@@ -233,7 +238,8 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
 
             if (!UnityScreenNavigatorSettings.Instance.EnableInteractionInTransition)
             {
-                _canvasGroup.interactable = true;
+                //_canvasGroup.interactable = true;
+                Interactable = true;
             }
         }
 
@@ -247,13 +253,15 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
             if (!push)
             {
                 gameObject.SetActive(true);
-                _rectTransform.FillParent(_parentTransform);
-                _canvasGroup.alpha = 1.0f;
+                RectTransform.FillParent((RectTransform)Parent);
+                //_canvasGroup.alpha = 1.0f;
+                Alpha = 1.0f;
             }
 
             if (!UnityScreenNavigatorSettings.Instance.EnableInteractionInTransition)
             {
-                _canvasGroup.interactable = false;
+                //_canvasGroup.interactable = false;
+                Interactable = false;
             }
 
             var routines = push
@@ -285,11 +293,12 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
                     }
 
                     anim.SetPartner(partnerModal?.transform as RectTransform);
-                    anim.Setup(_rectTransform);
+                    anim.Setup(RectTransform);
                     yield return CoroutineManager.Instance.Run(anim.CreatePlayRoutine());
                 }
 
-                _canvasGroup.alpha = 0.0f;
+                //_canvasGroup.alpha = 0.0f;
+                Alpha = 0.0f;
             }
         }
 

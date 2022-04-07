@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityScreenNavigator.Runtime.Core.Page;
+using UnityScreenNavigator.Runtime.Core.Shared.Views;
 
 namespace Demo.Scripts
 {
@@ -9,7 +10,8 @@ namespace Demo.Scripts
 
         private void Start()
         {
-            _pageContainer.Push(ResourceKey.TopPagePrefab(), false, loadAsync: false);
+            var option = new PushWindowOption(ResourceKey.TopPagePrefab(), false, loadAsync: false);
+            _pageContainer.Push(option);
         }
     }
 }

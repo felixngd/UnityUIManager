@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Modal;
 using UnityScreenNavigator.Runtime.Core.Shared;
+using UnityScreenNavigator.Runtime.Core.Shared.Views;
 using UnityScreenNavigator.Runtime.Core.Sheet;
 
 namespace Demo.Scripts
@@ -55,12 +56,14 @@ namespace Demo.Scripts
             {
                 beforeSheetIdentifierRegex = $"{nameof(ShopItemGridSheet)}[0-{index - 1}]";
             }
+
             var afterSheetIdentifierRegex = $"{nameof(ShopItemGridSheet)}[{index + 1}-9]";
             var toLeftExitAnim = SimpleTransitionAnimationObject.CreateInstance(beforeAlignment: SheetAlignment.Center,
                 afterAlignment: SheetAlignment.Left, beforeAlpha: 1.0f, afterAlpha: 0.0f);
             var toRightExitAnim = SimpleTransitionAnimationObject.CreateInstance(beforeAlignment: SheetAlignment.Center,
                 afterAlignment: SheetAlignment.Right, beforeAlpha: 1.0f, afterAlpha: 0.0f);
-            var fromRightEnterAnim = SimpleTransitionAnimationObject.CreateInstance(beforeAlignment: SheetAlignment.Right,
+            var fromRightEnterAnim = SimpleTransitionAnimationObject.CreateInstance(
+                beforeAlignment: SheetAlignment.Right,
                 afterAlignment: SheetAlignment.Center, beforeAlpha: 0.0f, afterAlpha: 1.0f);
             var fromLeftEnterAnim = SimpleTransitionAnimationObject.CreateInstance(beforeAlignment: SheetAlignment.Left,
                 afterAlignment: SheetAlignment.Center, beforeAlpha: 0.0f, afterAlpha: 1.0f);
@@ -73,13 +76,13 @@ namespace Demo.Scripts
                 enterAnimation1.AnimationObject = fromRightEnterAnim;
                 AnimationContainer.EnterAnimations.Add(enterAnimation1);
             }
-            
+
             var enterAnimation2 = new SheetTransitionAnimationContainer.TransitionAnimation();
             enterAnimation2.PartnerSheetIdentifierRegex = afterSheetIdentifierRegex;
             enterAnimation2.AssetType = AnimationAssetType.ScriptableObject;
             enterAnimation2.AnimationObject = fromLeftEnterAnim;
             AnimationContainer.EnterAnimations.Add(enterAnimation2);
-            
+
             if (!string.IsNullOrEmpty(beforeSheetIdentifierRegex))
             {
                 var exitAnimation1 = new SheetTransitionAnimationContainer.TransitionAnimation();
@@ -88,7 +91,7 @@ namespace Demo.Scripts
                 exitAnimation1.AnimationObject = toRightExitAnim;
                 AnimationContainer.ExitAnimations.Add(exitAnimation1);
             }
-            
+
             var exitAnimation2 = new SheetTransitionAnimationContainer.TransitionAnimation();
             exitAnimation2.PartnerSheetIdentifierRegex = afterSheetIdentifierRegex;
             exitAnimation2.AssetType = AnimationAssetType.ScriptableObject;
@@ -112,11 +115,12 @@ namespace Demo.Scripts
         private void OnFirstThumbButtonClicked()
         {
             var modalContainer = ModalContainer.Find(ContainerKey.MainModalContainer);
-            modalContainer.Push(ResourceKey.CharacterModalPrefab(), true, modal =>
+            var pushOption = new PushWindowOption(ResourceKey.CharacterModalPrefab(), true, onWindowCreated: (modal) =>
             {
-                var characterModal = (CharacterModal)modal;
+                var characterModal = (CharacterModal) modal;
                 characterModal.Setup(_characterId);
             });
+            modalContainer.Push(pushOption);
         }
     }
 }

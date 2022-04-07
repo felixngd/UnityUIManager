@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Modal;
 using UnityScreenNavigator.Runtime.Core.Page;
+using UnityScreenNavigator.Runtime.Core.Shared.Views;
 
 namespace Demo.Scripts
 {
@@ -55,12 +56,14 @@ namespace Demo.Scripts
 #endif
         private void OnSettingButtonClicked()
         {
-            ModalContainer.Find(ContainerKey.MainModalContainer).Push(ResourceKey.SettingsModalPrefab(), true);
+            var pushOption = new PushWindowOption(ResourceKey.SettingsModalPrefab(), true);
+            ModalContainer.Find(ContainerKey.MainModalContainer).Push(pushOption);
         }
 
         private void OnShopButtonClicked()
         {
-            PageContainer.Of(transform).Push(ResourceKey.ShopPagePrefab(), true);
+            var pushOption = new PushWindowOption(ResourceKey.ShopPagePrefab(), true);
+            PageContainer.Of(transform).Push(pushOption);
         }
     }
 }

@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Modal;
+using UnityScreenNavigator.Runtime.Core.Shared.Views;
 using UnityScreenNavigator.Runtime.Core.Sheet;
 using UnityScreenNavigator.Runtime.Foundation.Coroutine;
 
@@ -73,10 +74,10 @@ namespace Demo.Scripts
             {
                 _imageSheets[i].sheet.Setup(_characterId, i + 1);
             }
-            
+
             await _imageContainer.Show(_imageSheets[0].sheetId, false);
             _selectedRank = 1;
-            
+
             thumbnailGrid.Setup(_characterId);
             thumbnailGrid.ThumbnailClicked += x =>
             {
@@ -90,7 +91,7 @@ namespace Demo.Scripts
                 {
                     return;
                 }
-                
+
                 var sheetId = targetSheet.sheetId;
                 _imageContainer.Show(sheetId, true);
                 _selectedRank = x + 1;
@@ -136,12 +137,14 @@ namespace Demo.Scripts
 
         private void OnExpandButtonClicked()
         {
-            ModalContainer.Find(ContainerKey.MainModalContainer)
-                .Push(ResourceKey.CharacterImageModalPrefab(), true, modal =>
+            var pushOption = new PushWindowOption(ResourceKey.CharacterImageModalPrefab(), true,
+                onWindowCreated: modal =>
                 {
                     var characterImageModal = (CharacterImageModal) modal;
                     characterImageModal.Setup(_characterId, _selectedRank);
                 });
+            ModalContainer.Find(ContainerKey.MainModalContainer)
+                .Push(pushOption);
         }
     }
 }

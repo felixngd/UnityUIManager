@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Page;
+using UnityScreenNavigator.Runtime.Core.Shared.Views;
 
 namespace Demo.Scripts
 {
@@ -8,12 +9,12 @@ namespace Demo.Scripts
     {
         [SerializeField] private Button _button;
 
-        private void Start()
+        protected override void Start()
         {
             _button.onClick.AddListener(OnClick);
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
             if (_button != null)
             {
@@ -23,7 +24,8 @@ namespace Demo.Scripts
 
         private void OnClick()
         {
-            PageContainer.Of(transform).Push(ResourceKey.HomeLoadingPagePrefab(), true, false);
+            var option = new PushWindowOption(ResourceKey.HomeLoadingPagePrefab(), true, false);
+            PageContainer.Of(transform).Push(option);
         }
     }
 }
