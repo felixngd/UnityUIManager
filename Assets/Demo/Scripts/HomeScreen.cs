@@ -5,12 +5,13 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Modal;
-using UnityScreenNavigator.Runtime.Core.Page;
+using UnityScreenNavigator.Runtime.Core.Screen;
 using UnityScreenNavigator.Runtime.Core.Shared.Views;
+using Screen = UnityScreenNavigator.Runtime.Core.Screen.Screen;
 
 namespace Demo.Scripts
 {
-    public class HomePage : Page
+    public class HomeScreen : UnityScreenNavigator.Runtime.Core.Screen.Screen
     {
         [SerializeField] private Button _settingButton;
         [SerializeField] private Button _shopButton;
@@ -21,7 +22,7 @@ namespace Demo.Scripts
             _shopButton.onClick.AddListener(OnShopButtonClicked);
 
             // Preload the "Shop" page prefab.
-            await PageContainer.Of(transform).Preload(ResourceKey.ShopPagePrefab());
+            await ScreenContainer.Of(transform).Preload(ResourceKey.ShopPagePrefab());
             // Simulate loading time.
             await UniTask.Delay(TimeSpan.FromSeconds(1));
         }
@@ -42,7 +43,7 @@ namespace Demo.Scripts
         {
             _settingButton.onClick.RemoveListener(OnSettingButtonClicked);
             _shopButton.onClick.RemoveListener(OnShopButtonClicked);
-            PageContainer.Of(transform).ReleasePreloaded(ResourceKey.ShopPagePrefab());
+            ScreenContainer.Of(transform).ReleasePreloaded(ResourceKey.ShopPagePrefab());
             return UniTask.CompletedTask;
         }
 #else
@@ -56,14 +57,14 @@ namespace Demo.Scripts
 #endif
         private void OnSettingButtonClicked()
         {
-            var pushOption = new PushWindowOption(ResourceKey.SettingsModalPrefab(), true);
-            ModalContainer.Find(ContainerKey.MainModalContainer).Push(pushOption);
+            var pushOption = new WindowOption(ResourceKey.SettingsModalPrefab(), true);
+            ModalContainer.Find(ContainerKey.ModalContainerLayer).Push(pushOption);
         }
 
         private void OnShopButtonClicked()
         {
-            var pushOption = new PushWindowOption(ResourceKey.ShopPagePrefab(), true);
-            PageContainer.Of(transform).Push(pushOption);
+            var pushOption = new WindowOption(ResourceKey.ShopPagePrefab(), true);
+            ScreenContainer.Of(transform).Push(pushOption);
         }
     }
 }

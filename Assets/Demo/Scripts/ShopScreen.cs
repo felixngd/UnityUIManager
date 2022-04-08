@@ -4,13 +4,13 @@ using Cysharp.Threading.Tasks;
 #endif
 using UnityEngine;
 using UnityEngine.UI;
-using UnityScreenNavigator.Runtime.Core.Page;
 using UnityScreenNavigator.Runtime.Core.Sheet;
 using UnityScreenNavigator.Runtime.Foundation.Coroutine;
+using Screen = UnityScreenNavigator.Runtime.Core.Screen.Screen;
 
 namespace Demo.Scripts
 {
-    public class ShopPage : Page
+    public class ShopScreen : UnityScreenNavigator.Runtime.Core.Screen.Screen
     {
         private const int ItemGridSheetCount = 3;
 

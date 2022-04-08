@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityScreenNavigator.Runtime.Core.Page;
+using UnityEngine.Serialization;
+using UnityScreenNavigator.Runtime.Core.Screen;
 using UnityScreenNavigator.Runtime.Core.Shared.Views;
 
 namespace DemoDevelopment
@@ -7,12 +8,12 @@ namespace DemoDevelopment
     public class PageDevelopmentManager : MonoBehaviour
     {
         [SerializeField] private string _resourceKey;
-        [SerializeField] private PageContainer _pageContainer;
+        [FormerlySerializedAs("_pageContainer")] [SerializeField] private ScreenContainer screenContainer;
 
         private void Start()
         {
-            var pushOption = new PushWindowOption(_resourceKey, false);
-            _pageContainer.Push(pushOption);
+            var pushOption = new WindowOption(_resourceKey, false);
+            screenContainer.Push(pushOption);
         }
     }
 }

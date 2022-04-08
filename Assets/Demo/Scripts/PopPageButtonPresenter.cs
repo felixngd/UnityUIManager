@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityScreenNavigator.Runtime.Core.Page;
+using UnityScreenNavigator.Runtime.Core.Screen;
 
 namespace Demo
 {
@@ -26,8 +26,8 @@ namespace Demo
         private void OnClick()
         {
             var pageContainer = string.IsNullOrEmpty(_containerName)
-                ? PageContainer.Of(transform)
-                : PageContainer.Find(_containerName);
+                ? ScreenContainer.Of(transform)
+                : ScreenContainer.Find(_containerName);
             pageContainer.Pop(_playAnimation);
         }
     }

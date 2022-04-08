@@ -114,8 +114,8 @@ namespace Demo.Scripts
 #endif
         private void OnFirstThumbButtonClicked()
         {
-            var modalContainer = ModalContainer.Find(ContainerKey.MainModalContainer);
-            var pushOption = new PushWindowOption(ResourceKey.CharacterModalPrefab(), true, onWindowCreated: (modal) =>
+            var modalContainer = ModalContainer.Find(ContainerKey.ModalContainerLayer);
+            var pushOption = new WindowOption(ResourceKey.CharacterModalPrefab(), true, onWindowCreated: (modal) =>
             {
                 var characterModal = (CharacterModal) modal;
                 characterModal.Setup(_characterId);

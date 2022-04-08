@@ -137,13 +137,13 @@ namespace Demo.Scripts
 
         private void OnExpandButtonClicked()
         {
-            var pushOption = new PushWindowOption(ResourceKey.CharacterImageModalPrefab(), true,
+            var pushOption = new WindowOption(ResourceKey.CharacterImageModalPrefab(), true,
                 onWindowCreated: modal =>
                 {
                     var characterImageModal = (CharacterImageModal) modal;
                     characterImageModal.Setup(_characterId, _selectedRank);
                 });
-            ModalContainer.Find(ContainerKey.MainModalContainer)
+            ModalContainer.Find(ContainerKey.ModalContainerLayer)
                 .Push(pushOption);
         }
     }

@@ -1,17 +1,18 @@
 using UnityEngine;
-using UnityScreenNavigator.Runtime.Core.Page;
+using UnityEngine.Serialization;
+using UnityScreenNavigator.Runtime.Core.Screen;
 using UnityScreenNavigator.Runtime.Core.Shared.Views;
 
 namespace Demo.Scripts
 {
     public class RootPageManager : MonoBehaviour
     {
-        [SerializeField] private PageContainer _pageContainer;
+        [FormerlySerializedAs("_pageContainer")] [SerializeField] private ScreenContainer screenContainer;
 
         private void Start()
         {
-            var option = new PushWindowOption(ResourceKey.TopPagePrefab(), false, loadAsync: false);
-            _pageContainer.Push(option);
+            var option = new WindowOption(ResourceKey.TopPagePrefab(), false, loadAsync: false);
+            screenContainer.Push(option);
         }
     }
 }

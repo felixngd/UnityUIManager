@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityScreenNavigator.Runtime.Core.Page;
+using UnityScreenNavigator.Runtime.Core.Screen;
 using UnityScreenNavigator.Runtime.Core.Shared.Views;
+using Screen = UnityScreenNavigator.Runtime.Core.Screen.Screen;
 
 namespace Demo.Scripts
 {
-    public class TopPage : Page
+    public class TopScreen : UnityScreenNavigator.Runtime.Core.Screen.Screen
     {
         [SerializeField] private Button _button;
 
@@ -24,8 +25,8 @@ namespace Demo.Scripts
 
         private void OnClick()
         {
-            var option = new PushWindowOption(ResourceKey.HomeLoadingPagePrefab(), true, false);
-            PageContainer.Of(transform).Push(option);
+            var option = new WindowOption(ResourceKey.HomeLoadingPagePrefab(), true, false);
+            ScreenContainer.Of(transform).Push(option);
         }
     }
 }
