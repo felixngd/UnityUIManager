@@ -11,6 +11,13 @@ namespace Demo.Scripts
 {
     public class Launcher : MonoBehaviour
     {
+        private GlobalContainerLayerManager _globalContainerLayerManager;
+
+        private void Awake()
+        {
+            _globalContainerLayerManager = FindObjectOfType<GlobalContainerLayerManager>();
+        }
+
         private IEnumerator Start()
         {
             var layers = UnityScreenNavigatorSettings.Instance.GetContainerLayers();
@@ -19,13 +26,13 @@ namespace Demo.Scripts
                 switch (layers[i].layerType)
                 {
                     case ContainerLayerType.Modal:
-                        ModalContainer.Create(layers[i].name, ResourceKey.SettingsModalPrefab());
+                        ModalContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
                         break;
                     case ContainerLayerType.Page:
-                        PageContainer.Create(layers[i].name, ResourceKey.HomePagePrefab());
+                        PageContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
                         break;
                     case ContainerLayerType.UnorderedModal:
-                        UnorderedModalContainer.Create(ResourceKey.CharacterModalPrefab(), layers[i].name);
+                        UnorderedModalContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -33,6 +40,8 @@ namespace Demo.Scripts
             }
 
             yield return null;
+            var option = new PushWindowOption(ResourceKey.TopPagePrefab(), false, loadAsync: false);
+            _globalContainerLayerManager.Find<PageContainer>("MAIN_CONTAINER").Push(option);
         }
     }
 }
