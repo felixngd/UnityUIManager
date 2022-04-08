@@ -1,5 +1,6 @@
 #if USN_USE_ASYNC_METHODS
 using Cysharp.Threading.Tasks;
+using UnityScreenNavigator.Runtime.Foundation.AssetLoader;
 #endif
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,9 +26,9 @@ namespace Demo.Scripts
         public override async UniTask WillPushEnter()
         {
             var resourceKey = ResourceKey.CharacterSprite(_characterId, _rank);
-            var handle = Resources.LoadAsync<Sprite>(resourceKey);
-            await handle;
-            var sprite = (Sprite) handle.asset;
+            var handle = DemoAssetLoader.AssetLoader.LoadAsync<Sprite>(resourceKey);
+            await handle.Task;
+            var sprite = handle.Result;
             _image.sprite = sprite;
         }
 #else

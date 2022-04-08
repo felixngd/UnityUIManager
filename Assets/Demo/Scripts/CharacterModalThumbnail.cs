@@ -24,8 +24,8 @@ namespace Demo.Scripts
 
         public void Setup(int id, int rank)
         {
-            var sprite = Resources.Load<Sprite>(ResourceKey.CharacterThumbnailSprite(id, rank));
-            _image.sprite = sprite;
+            var sprite = DemoAssetLoader.AssetLoader.Load<Sprite>(ResourceKey.CharacterThumbnailSprite(id, rank));
+            _image.sprite = sprite.Result;
         }
 
         private void OnClicked()

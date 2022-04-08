@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityScreenNavigator.Runtime.Core.DynamicWindow;
 using UnityScreenNavigator.Runtime.Core.Modal;
@@ -45,7 +46,14 @@ namespace Demo.Scripts
 
             yield return null;
             var option = new WindowOption(ResourceKey.TopPagePrefab(), false, loadAsync: false);
-            _globalContainerLayerManager.Find<ScreenContainer>("Main_Container").Push(option);
+            _globalContainerLayerManager.Find<ScreenContainer>(ContainerKey.MainContainerLayer).Push(option);
+            
+        }
+        [Button]
+        private void TestOpenDynamicWindow()
+        {
+            var option = new WindowOption("Prefabs/prefab_demo_hero_info.prefab", false, loadAsync: false);
+            _globalContainerLayerManager.Find<DynamicWindowContainer>(ContainerKey.TutorialContainerLayer).Show(option);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Demo.Scripts
         public override UniTask Initialize()
         {
             var key = ResourceKey.CharacterThumbnailSprite(_characterId, 1);
-            _thumbnailImage.sprite = Resources.Load<Sprite>(key);
+            _thumbnailImage.sprite = DemoAssetLoader.AssetLoader.Load<Sprite>(key).Result;
             _firstThumbButton.onClick.AddListener(OnFirstThumbButtonClicked);
             return UniTask.CompletedTask;
         }

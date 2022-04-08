@@ -1,29 +1,23 @@
+using UnityEngine;
 using UnityScreenNavigator.Runtime.Foundation.AssetLoader;
 
 namespace Demo.Scripts
 {
-    public class DemoAssetLoader : AssetLoaderObject
+    public sealed class DemoAssetLoader
     {
-        private readonly ResourcesAssetLoader _loader = new ResourcesAssetLoader();
-
-        public override AssetLoadHandle<T> Load<T>(string key)
+        private static IAssetLoader _defaultAssetLoader;
+        
+        public static IAssetLoader AssetLoader
         {
-            return _loader.Load<T>(GetResourceKey(key));
-        }
+            get
+            {
+                if (_defaultAssetLoader == null)
+                {
+                    _defaultAssetLoader = ScriptableObject.CreateInstance<AddressableAssetLoaderObject>();
+                }
 
-        public override AssetLoadHandle<T> LoadAsync<T>(string key)
-        {
-            return _loader.LoadAsync<T>(GetResourceKey(key));
-        }
-
-        public override void Release(AssetLoadHandle handle)
-        {
-            _loader.Release(handle);
-        }
-
-        private string GetResourceKey(string key)
-        {
-            return $"Prefabs/prefab_demo_{key}";
+                return _defaultAssetLoader;
+            }
         }
     }
 }

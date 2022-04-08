@@ -22,9 +22,9 @@ namespace Demo.Scripts
 #if USN_USE_ASYNC_METHODS
         public override async UniTask WillEnter()
         {
-            var handle = Resources.LoadAsync<Sprite>(ResourceKey.CharacterSprite(_characterId, _rank));
-            await handle;
-            _image.sprite = (Sprite) handle.asset;
+            var handle = DemoAssetLoader.AssetLoader.LoadAsync<Sprite>(ResourceKey.CharacterSprite(_characterId, _rank));
+            await handle.Task;
+            _image.sprite = handle.Result;
         }
 #else
         public override IEnumerator WillEnter()

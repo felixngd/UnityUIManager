@@ -10,7 +10,7 @@ using Screen = UnityScreenNavigator.Runtime.Core.Screen.Screen;
 
 namespace Demo.Scripts
 {
-    public class ShopScreen : UnityScreenNavigator.Runtime.Core.Screen.Screen
+    public class ShopScreen : Screen
     {
         private const int ItemGridSheetCount = 3;
 
