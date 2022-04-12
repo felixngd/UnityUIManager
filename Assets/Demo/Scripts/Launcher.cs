@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityScreenNavigator.Runtime.Core.DynamicWindow;
@@ -14,12 +15,12 @@ namespace Demo.Scripts
     {
         [SerializeField] private ContainerLayerSettings containerLayerSettings;
         private GlobalContainerLayerManager _globalContainerLayerManager;
-        
+
         private void Awake()
         {
-            if(containerLayerSettings == null)
+            if (containerLayerSettings == null)
                 throw new ArgumentNullException(nameof(containerLayerSettings));
-            
+
             _globalContainerLayerManager = FindObjectOfType<GlobalContainerLayerManager>();
         }
 
@@ -37,7 +38,7 @@ namespace Demo.Scripts
                         ScreenContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
                         break;
                     case ContainerLayerType.Dynamic:
-                        DynamicWindowContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
+                        DynamicDynamicWindowContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -47,13 +48,26 @@ namespace Demo.Scripts
             yield return null;
             var option = new WindowOption(ResourceKey.TopPagePrefab(), false, loadAsync: false);
             _globalContainerLayerManager.Find<ScreenContainer>(ContainerKey.MainContainerLayer).Push(option);
-            
         }
+
         [Button]
         private void TestOpenDynamicWindow()
         {
             var option = new WindowOption("Prefabs/prefab_demo_hero_info.prefab", false, loadAsync: false);
-            _globalContainerLayerManager.Find<DynamicWindowContainer>(ContainerKey.TutorialContainerLayer).Show(option);
+            _globalContainerLayerManager.Find<DynamicDynamicWindowContainer>(ContainerKey.TutorialContainerLayer).Show(option);
+        }
+
+        [Button]
+        private void HideDynamicWindow(string identifier)
+        {
+            _globalContainerLayerManager.Find<DynamicDynamicWindowContainer>(ContainerKey.TutorialContainerLayer)
+                .Hide(identifier);
+        }
+        [Button]
+        private void HideAllDynamicWindow()
+        {
+            _globalContainerLayerManager.Find<DynamicDynamicWindowContainer>(ContainerKey.TutorialContainerLayer)
+                .HideAll(true);
         }
     }
 }

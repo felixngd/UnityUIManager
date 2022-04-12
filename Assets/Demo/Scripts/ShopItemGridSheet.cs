@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityScreenNavigator.Runtime.Core.DynamicWindow;
 using UnityScreenNavigator.Runtime.Core.Modal;
 using UnityScreenNavigator.Runtime.Core.Shared;
 using UnityScreenNavigator.Runtime.Core.Shared.Views;
