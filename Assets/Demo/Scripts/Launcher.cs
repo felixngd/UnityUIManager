@@ -38,7 +38,7 @@ namespace Demo.Scripts
                         ScreenContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
                         break;
                     case ContainerLayerType.Dynamic:
-                        DynamicDynamicWindowContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
+                        DynamicWindowContainer.Create(layers[i].name, layers[i].layer, layers[i].layerType);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -54,19 +54,19 @@ namespace Demo.Scripts
         private void TestOpenDynamicWindow()
         {
             var option = new WindowOption("Prefabs/prefab_demo_hero_info.prefab", false, loadAsync: false);
-            _globalContainerLayerManager.Find<DynamicDynamicWindowContainer>(ContainerKey.TutorialContainerLayer).Show(option);
+            _globalContainerLayerManager.Find<DynamicWindowContainer>(ContainerKey.TutorialContainerLayer).Show(option);
         }
 
         [Button]
         private void HideDynamicWindow(string identifier)
         {
-            _globalContainerLayerManager.Find<DynamicDynamicWindowContainer>(ContainerKey.TutorialContainerLayer)
+            _globalContainerLayerManager.Find<DynamicWindowContainer>(ContainerKey.TutorialContainerLayer)
                 .Hide(identifier);
         }
         [Button]
         private void HideAllDynamicWindow()
         {
-            _globalContainerLayerManager.Find<DynamicDynamicWindowContainer>(ContainerKey.TutorialContainerLayer)
+            _globalContainerLayerManager.Find<DynamicWindowContainer>(ContainerKey.TutorialContainerLayer)
                 .HideAll(true);
         }
     }
