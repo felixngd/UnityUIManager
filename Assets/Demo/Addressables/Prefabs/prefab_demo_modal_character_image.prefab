@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2601907645356497128}
   - component: {fileID: 2203604672439024110}
   - component: {fileID: 6608196051640697609}
+  - component: {fileID: 7040727713610938206}
   m_Layer: 5
   m_Name: prefab_demo_modal_character_image
   m_TagString: Untagged
@@ -107,6 +108,18 @@ MonoBehaviour:
   _duration: 0.2
   _easeType: 8
   _isExit: 1
+--- !u!225 &7040727713610938206
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616405201594747124}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2318096211949059613
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +180,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -248,6 +262,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -276,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -317,7 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a07ac674f70d6945b210dffb0eb39bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _containerName: MainModalContainer
+  _containerName: Modal_Container
   _playAnimation: 1
 --- !u!1 &9135548137606519420
 GameObject:
@@ -379,6 +395,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
