@@ -137,6 +137,10 @@ MonoBehaviour:
     m_Address: Prefabs/prefab_demo_hero_info.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: c1ef4ef85e38b41bab87a454033d998b
+    m_Address: prefab_demo_screen_1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 14e8abed4060b0049808bf147e88b0b5, type: 2}
   m_SchemaSet:

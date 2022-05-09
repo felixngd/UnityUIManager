@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.coffee.upm-git-extension": {
+      "version": "https://github.com/laicasaane/UpmGitExtension.git#2.0.0-preview.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ac44b7de1b8b38361834ceb759e4532e1fbe9e39"
+    },
     "com.cysharp.unitask": {
       "version": "2.3.1",
       "depth": 0,
