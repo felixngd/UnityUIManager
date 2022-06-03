@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Demo.Scripts
@@ -11,14 +12,15 @@ namespace Demo.Scripts
 
         public event Action<int> ThumbnailClicked;
 
-        public void Setup(int characterId)
+        public UniTask Setup(int characterId)
         {
-            _firstThumb.Setup(characterId, 1);
+            var task1 = _firstThumb.Setup(characterId, 1);
             _firstThumb.Clicked += () => ThumbnailClicked?.Invoke(0);
-            _secondThumb.Setup(characterId, 2);
+            var task2 = _secondThumb.Setup(characterId, 2);
             _secondThumb.Clicked += () => ThumbnailClicked?.Invoke(1);
-            _thirdThumb.Setup(characterId, 3);
+            var task3 = _thirdThumb.Setup(characterId, 3);
             _thirdThumb.Clicked += () => ThumbnailClicked?.Invoke(2);
+            return UniTask.WhenAll(task1, task2, task3);
         }
     }
 }

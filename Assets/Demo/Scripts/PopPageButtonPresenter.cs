@@ -9,7 +9,7 @@ namespace Demo
     {
         [SerializeField] private string _containerName;
         [SerializeField] private bool _playAnimation = true;
-        
+
         private Button _button;
 
         private void Start()

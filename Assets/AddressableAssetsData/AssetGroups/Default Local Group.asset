@@ -141,6 +141,18 @@ MonoBehaviour:
     m_Address: prefab_demo_screen_1.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 726ade0319e8f4059b4f2684352daffe
+    m_Address: prefab_demo_screen_4.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6de2e827e0a9b498183eeb9b5edcdd14
+    m_Address: prefab_demo_screen_3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e2ed526c224324bceb409cc532b9309d
+    m_Address: prefab_demo_screen_2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 14e8abed4060b0049808bf147e88b0b5, type: 2}
   m_SchemaSet:

@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: Demo Scene UI Layer Setting
   m_EditorClassIdentifier: 
   containerLayers:
-  - name: Gameplayer_Container
-    layer: 0
-    layerType: 2
   - name: Main_Container
     layer: 1
     layerType: 1
@@ -24,4 +21,7 @@ MonoBehaviour:
     layerType: 0
   - name: Tutorial_Container
     layer: 3
+    layerType: 2
+  - name: Gameplayer_Container
+    layer: 4
     layerType: 2

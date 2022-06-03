@@ -1,6 +1,7 @@
 using System;
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 namespace Demo.Scripts
@@ -9,8 +10,6 @@ namespace Demo.Scripts
     {
         [SerializeField] private Image _image;
         [SerializeField] private Button _button;
-
-        public event Action Clicked;
 
         private void Awake()
         {
@@ -22,10 +21,13 @@ namespace Demo.Scripts
             _button.onClick.RemoveListener(OnClicked);
         }
 
-        public void Setup(int id, int rank)
+        public event Action Clicked;
+
+        public async UniTask Setup(int id, int rank)
         {
-            var sprite = DemoAssetLoader.AssetLoader.Load<Sprite>(ResourceKey.CharacterThumbnailSprite(id, rank));
-            _image.sprite = sprite.Result;
+            var sprite =
+                await AddressablesManager.LoadAssetAsync<Sprite>(ResourceKey.CharacterThumbnailSprite(id, rank));
+            _image.sprite = sprite.Value;
         }
 
         private void OnClicked()

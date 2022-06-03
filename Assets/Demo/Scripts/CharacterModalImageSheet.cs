@@ -1,9 +1,10 @@
-#if USN_USE_ASYNC_METHODS
-using Cysharp.Threading.Tasks;
-#endif
 using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Sheet;
+#if USN_USE_ASYNC_METHODS
+using Cysharp.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+#endif
 
 namespace Demo.Scripts
 {
@@ -19,21 +20,12 @@ namespace Demo.Scripts
             _characterId = characterId;
             _rank = rank;
         }
-#if USN_USE_ASYNC_METHODS
+
         public override async UniTask WillEnter()
         {
-            var handle = DemoAssetLoader.AssetLoader.LoadAsync<Sprite>(ResourceKey.CharacterSprite(_characterId, _rank));
-            await handle.Task;
-            _image.sprite = handle.Result;
+            var handle =
+                await AddressablesManager.LoadAssetAsync<Sprite>(ResourceKey.CharacterSprite(_characterId, _rank));
+            _image.sprite = handle.Value;
         }
-#else
-        public override IEnumerator WillEnter()
-        {
-            var handle = Resources.LoadAsync<Sprite>(ResourceKey.CharacterSprite(_characterId, _rank));
-            yield return handle;
-            _image.sprite = (Sprite) handle.asset;
-        }
-#endif
     }
-
 }

@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.DynamicWindow;
 using UnityScreenNavigator.Runtime.Core.Screen;
-using UnityScreenNavigator.Runtime.Core.Shared.Views;
+using Screen = UnityScreenNavigator.Runtime.Core.Screen.Screen;
 
 namespace Demo.Scripts
 {
-    public class TopScreen : UnityScreenNavigator.Runtime.Core.Screen.Screen
+    public class TopScreen : Screen
     {
         [SerializeField] private Button _button;
 
@@ -17,10 +17,7 @@ namespace Demo.Scripts
 
         protected override void OnDestroy()
         {
-            if (_button != null)
-            {
-                _button.onClick.RemoveListener(OnClick);
-            }
+            if (_button != null) _button.onClick.RemoveListener(OnClick);
         }
 
         private void OnClick()

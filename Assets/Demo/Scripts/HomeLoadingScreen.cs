@@ -1,6 +1,5 @@
 using UnityScreenNavigator.Runtime.Core.DynamicWindow;
 using UnityScreenNavigator.Runtime.Core.Screen;
-using UnityScreenNavigator.Runtime.Core.Shared.Views;
 
 namespace Demo.Scripts
 {

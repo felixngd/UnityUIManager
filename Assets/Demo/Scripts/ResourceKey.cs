@@ -12,7 +12,7 @@ namespace Demo.Scripts
         private const string ShopItemGridSheetPrefabName = "sheet_shop_item_grid";
         private const string CharacterModalImageSheetPrefabName = "sheet_character_modal_image";
         private const string CharacterImageModalPrefabName = "modal_character_image";
-        
+
         private const string CharacterImageFormat = "Textures/tex_character_{0:D3}_{1}";
         private const string CharacterThumbnailFormat = "Textures/tex_character_thumb_{0:D3}_{1}";
 
@@ -20,42 +20,42 @@ namespace Demo.Scripts
         {
             return string.Format(PrefabFormat, TopPagePrefabName);
         }
-        
+
         public static string HomePagePrefab()
         {
             return string.Format(PrefabFormat, HomePagePrefabName);
         }
-        
+
         public static string HomeLoadingPagePrefab()
         {
             return string.Format(PrefabFormat, HomeLoadingPagePrefabName);
         }
-        
+
         public static string ShopPagePrefab()
         {
             return string.Format(PrefabFormat, ShopPagePrefabName);
         }
-        
+
         public static string SettingsModalPrefab()
         {
             return string.Format(PrefabFormat, SettingsModalPrefabName);
         }
-        
+
         public static string CharacterModalPrefab()
         {
             return string.Format(PrefabFormat, CharacterModalPrefabName);
         }
-        
+
         public static string ShopItemGridSheetPrefab()
         {
             return string.Format(PrefabFormat, ShopItemGridSheetPrefabName);
         }
-        
+
         public static string CharacterModalImageSheetPrefab()
         {
             return string.Format(PrefabFormat, CharacterModalImageSheetPrefabName);
         }
-        
+
         public static string CharacterImageModalPrefab()
         {
             return string.Format(PrefabFormat, CharacterImageModalPrefabName);
@@ -65,10 +65,15 @@ namespace Demo.Scripts
         {
             return string.Format(CharacterImageFormat, characterId, rank);
         }
-        
+
         public static string CharacterThumbnailSprite(int characterId, int rank)
         {
             return string.Format(CharacterThumbnailFormat, characterId, rank);
+        }
+
+        public static string ScreenKey(int screenId)
+        {
+            return string.Format("prefab_demo_screen_{0}.prefab", screenId);
         }
     }
 }

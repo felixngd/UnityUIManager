@@ -8,20 +8,21 @@ namespace Demo.Scripts
         [SerializeField] private float _duration = 0.3f;
         [SerializeField] private EaseType _easeType = EaseType.QuarticEaseOut;
         [SerializeField] private bool _isExit;
-
-        private RectTransform _targetRectTransform;
+        private Vector3 _endPosition;
+        private Vector2 _endSize;
         private RectTransform _partnerImageRectTransform;
         private Vector3 _startPosition;
-        private Vector3 _endPosition;
         private Vector2 _startSize;
-        private Vector2 _endSize;
+
+        private RectTransform _targetRectTransform;
 
         public override float Duration => _duration;
 
         public override void Setup()
         {
             _targetRectTransform = RectTransform.GetComponent<CharacterImageModal>().ImageTransform;
-            _partnerImageRectTransform = PartnerRectTransform.GetComponent<CharacterModal>().CharacterImageRectTransform;
+            _partnerImageRectTransform =
+                PartnerRectTransform.GetComponent<CharacterModal>().CharacterImageRectTransform;
             _startPosition = _isExit ? _targetRectTransform.position : _partnerImageRectTransform.position;
             _endPosition = _isExit ? _partnerImageRectTransform.position : _targetRectTransform.position;
             _startSize = _isExit ? _targetRectTransform.rect.size : _partnerImageRectTransform.rect.size;
@@ -37,14 +38,8 @@ namespace Demo.Scripts
             var size = Vector2.Lerp(_startSize, _endSize, progress);
             _targetRectTransform.position = position;
             _targetRectTransform.sizeDelta = size;
-            if (progress == 0 && !_isExit)
-            {
-                _partnerImageRectTransform.gameObject.SetActive(false);
-            }
-            if (progress == 1 && _isExit)
-            {
-                _partnerImageRectTransform.gameObject.SetActive(true);
-            }
+            if (progress == 0 && !_isExit) _partnerImageRectTransform.gameObject.SetActive(false);
+            if (progress == 1 && _isExit) _partnerImageRectTransform.gameObject.SetActive(true);
         }
     }
 }
