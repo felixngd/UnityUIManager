@@ -1,8 +1,8 @@
 using Demo.Scripts;
 using UnityEditor;
 using UnityEngine;
-using UnityScreenNavigator.Runtime.Core.DynamicWindow;
 using UnityScreenNavigator.Runtime.Core.Screen;
+using UnityScreenNavigator.Runtime.Core.Shared;
 
 public class TestUniTask : MonoBehaviour
 {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityScreenNavigator.Runtime.Core.DynamicWindow;
 using UnityScreenNavigator.Runtime.Core.Modal;
+using UnityScreenNavigator.Runtime.Core.Shared;
 using UnityScreenNavigator.Runtime.Core.Sheet;
 #if USN_USE_ASYNC_METHODS
 using Cysharp.Threading.Tasks;
