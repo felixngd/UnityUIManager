@@ -21,7 +21,4 @@ MonoBehaviour:
     layerType: 0
   - name: Tutorial_Container
     layer: 3
-    layerType: 2
-  - name: Gameplayer_Container
-    layer: 4
-    layerType: 2
+    layerType: 1
