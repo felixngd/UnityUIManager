@@ -513,7 +513,7 @@ PlayableDirector:
   m_PlayableAsset: {fileID: 11400000, guid: 853390c3923227743bfc2e4d3f792c95, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
-  m_DirectorUpdateMode: 3
+  m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: -9015890211819002456, guid: 853390c3923227743bfc2e4d3f792c95, type: 2}
@@ -741,12 +741,12 @@ MonoBehaviour:
   _animationContainer:
     _pushEnterAnimations: []
     _pushExitAnimations:
-    - _partnerPageIdentifierRegex: 
+    - _partnerScreenIdentifierRegex: 
       _assetType: 0
       _animationBehaviour: {fileID: 8412107660247316402}
       _animationObject: {fileID: 0}
     _popEnterAnimations:
-    - _partnerPageIdentifierRegex: 
+    - _partnerScreenIdentifierRegex: 
       _assetType: 0
       _animationBehaviour: {fileID: 7127203061110940635}
       _animationObject: {fileID: 0}
