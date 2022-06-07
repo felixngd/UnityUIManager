@@ -39,7 +39,7 @@ namespace Demo.Scripts.Dialogs
             base.OnInspectorGUI();
             if (GUILayout.Button("Open Dialog"))
             {
-                ((TestDialog) target).OpenDialog();
+                ((TestDialog) target).OpenDialog().Forget();
             }
         }
     }
