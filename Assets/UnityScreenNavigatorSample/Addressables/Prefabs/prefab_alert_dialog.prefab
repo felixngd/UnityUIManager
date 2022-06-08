@@ -135,13 +135,13 @@ MonoBehaviour:
   _animationContainer:
     _enterAnimations: []
     _exitAnimations: []
-  Title: {fileID: 8571832740193347294}
-  Message: {fileID: 8571832739431837766}
-  Content: {fileID: 8571832741211081454}
-  ConfirmButton: {fileID: 8571832740782411219}
-  NeutralButton: {fileID: 8571832740662706669}
-  CancelButton: {fileID: 8571832740292451033}
-  OutsideButton: {fileID: 8571832740144428922}
+  titleText: {fileID: 8571832740193347294}
+  messageText: {fileID: 8571832739431837766}
+  content: {fileID: 8571832741211081454}
+  confirmButton: {fileID: 8571832740782411219}
+  neutralButton: {fileID: 8571832740662706669}
+  cancelButton: {fileID: 8571832740292451033}
+  outsideButton: {fileID: 8571832740144428922}
 --- !u!1 &8571832739884634041
 GameObject:
   m_ObjectHideFlags: 0

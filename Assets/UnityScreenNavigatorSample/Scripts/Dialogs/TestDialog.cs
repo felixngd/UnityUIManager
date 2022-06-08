@@ -1,16 +1,14 @@
 using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Interactivity;
 
 namespace Demo.Scripts.Dialogs
 {
     public class TestDialog : MonoBehaviour
     {
-        private void Start()
-        {
-        }
-
+        [SerializeField] private Image tipObject;
         public async UniTaskVoid OpenDialog()
         {
             AlertDialog.DialogKey = "Prefabs/prefab_alert_dialog";
@@ -29,6 +27,7 @@ namespace Demo.Scripts.Dialogs
                 Debug.Log("Neutral button clicked");
             }
         }
+        
     }
 
     [CustomEditor(typeof(TestDialog))]

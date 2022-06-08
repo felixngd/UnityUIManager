@@ -8,15 +8,13 @@ namespace Demo.Scripts.Managers
     {
         public static GlobalContainerLayerManager Root;
 
-        protected override void Start()
+        protected void Start()
         {
-            base.Start();
             Root = this;
         }
 
-        protected override void OnDestroy()
+        protected void OnDestroy()
         {
-            base.OnDestroy();
             Root = null;
         }
 

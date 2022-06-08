@@ -4,6 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Modal;
 using UnityScreenNavigator.Runtime.Core.Shared;
+using UnityScreenNavigator.Runtime.Core.Shared.Animation;
 using UnityScreenNavigator.Runtime.Core.Sheet;
 
 namespace Demo.Scripts
@@ -50,30 +51,30 @@ namespace Demo.Scripts
 
             if (!string.IsNullOrEmpty(beforeSheetIdentifierRegex))
             {
-                var enterAnimation1 = new SheetTransitionAnimationContainer.TransitionAnimation();
-                enterAnimation1.PartnerSheetIdentifierRegex = beforeSheetIdentifierRegex;
+                var enterAnimation1 = new TransitionAnimation();
+                enterAnimation1.PartnerIdentifierRegex = beforeSheetIdentifierRegex;
                 enterAnimation1.AssetType = AnimationAssetType.ScriptableObject;
                 enterAnimation1.AnimationObject = fromRightEnterAnim;
                 AnimationContainer.EnterAnimations.Add(enterAnimation1);
             }
 
-            var enterAnimation2 = new SheetTransitionAnimationContainer.TransitionAnimation();
-            enterAnimation2.PartnerSheetIdentifierRegex = afterSheetIdentifierRegex;
+            var enterAnimation2 = new TransitionAnimation();
+            enterAnimation2.PartnerIdentifierRegex = afterSheetIdentifierRegex;
             enterAnimation2.AssetType = AnimationAssetType.ScriptableObject;
             enterAnimation2.AnimationObject = fromLeftEnterAnim;
             AnimationContainer.EnterAnimations.Add(enterAnimation2);
 
             if (!string.IsNullOrEmpty(beforeSheetIdentifierRegex))
             {
-                var exitAnimation1 = new SheetTransitionAnimationContainer.TransitionAnimation();
-                exitAnimation1.PartnerSheetIdentifierRegex = beforeSheetIdentifierRegex;
+                var exitAnimation1 = new TransitionAnimation();
+                exitAnimation1.PartnerIdentifierRegex = beforeSheetIdentifierRegex;
                 exitAnimation1.AssetType = AnimationAssetType.ScriptableObject;
                 exitAnimation1.AnimationObject = toRightExitAnim;
                 AnimationContainer.ExitAnimations.Add(exitAnimation1);
             }
 
-            var exitAnimation2 = new SheetTransitionAnimationContainer.TransitionAnimation();
-            exitAnimation2.PartnerSheetIdentifierRegex = afterSheetIdentifierRegex;
+            var exitAnimation2 = new TransitionAnimation();
+            exitAnimation2.PartnerIdentifierRegex = afterSheetIdentifierRegex;
             exitAnimation2.AssetType = AnimationAssetType.ScriptableObject;
             exitAnimation2.AnimationObject = toLeftExitAnim;
             AnimationContainer.ExitAnimations.Add(exitAnimation2);
