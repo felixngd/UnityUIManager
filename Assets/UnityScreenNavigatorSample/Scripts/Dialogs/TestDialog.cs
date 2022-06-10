@@ -27,7 +27,7 @@ namespace Demo.Scripts.Dialogs
                 Debug.Log("Neutral button clicked");
             }
         }
-        
+
     }
 
     [CustomEditor(typeof(TestDialog))]

@@ -15,17 +15,46 @@ namespace Demo.Scripts
         [SerializeField] private Button _settingButton;
         [SerializeField] private Button _shopButton;
         [SerializeField] private Button _showTooltip;
+        [SerializeField] private Button _showToast;
+        [SerializeField] private Button _showAlertDialog;
 
         public override async UniTask Initialize()
         {
             _settingButton.onClick.AddListener(OnSettingButtonClicked);
             _shopButton.onClick.AddListener(OnShopButtonClicked);
             _showTooltip.onClick.AddListener(OnShowTooltipClicked);
+            _showToast.onClick.AddListener(OnShowToastClicked);
+            _showAlertDialog.onClick.AddListener(OnShowAlertDialogClicked);
 
             // Preload the "Shop" page prefab.
             await ScreenContainer.Of(transform).Preload(ResourceKey.ShopPagePrefab());
             // Simulate loading time.
             await UniTask.Delay(TimeSpan.FromSeconds(1));
+        }
+
+        private async void OnShowAlertDialogClicked()
+        {
+            AlertDialog.DialogKey = "Prefabs/prefab_alert_dialog";
+            var result = await DefaultDialogService.ShowDialog("Hello World", "This is the first dialog in the demo",
+                "OK", "Cancel");
+            if (result == AlertDialog.BUTTON_POSITIVE)
+            {
+                Debug.Log("Positive button clicked");
+            }
+            else if (result == AlertDialog.BUTTON_NEGATIVE)
+            {
+                Debug.Log("Negative button clicked");
+            }
+            else
+            {
+                Debug.Log("Neutral button clicked");
+            }
+        }
+
+        private void OnShowToastClicked()
+        {
+            Toast.ToastKey = "Prefabs/DefaultToast";
+            Toast.Show("This is the first toast in the demo", 2f).Forget();
         }
 
 

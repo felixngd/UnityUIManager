@@ -161,6 +161,10 @@ MonoBehaviour:
     m_Address: Prefabs/DefaultTooltip
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 6ce9e104e28e6475d855df33e10556b3
+    m_Address: Prefabs/DefaultToast
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 14e8abed4060b0049808bf147e88b0b5, type: 2}
   m_SchemaSet:

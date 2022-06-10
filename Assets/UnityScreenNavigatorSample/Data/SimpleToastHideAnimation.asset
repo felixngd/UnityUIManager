@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e3cf8a222e040f09e8734db1fdef403, type: 3}
-  m_Name: SimpleHideTooltipAnimation
+  m_Name: SimpleToastHideAnimation
   m_EditorClassIdentifier: 
   _delay: 0
-  _duration: 0.4
-  _easeType: 12
+  _duration: 0.2
+  _easeType: 32
   _beforeScale: {x: 1, y: 1, z: 1}
   _beforeAlpha: 1
   _afterScale: {x: 0, y: 0, z: 0}
