@@ -4,7 +4,15 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/UnityScreenNavigator/~Samples/UnityScreenNavigatorSample/Scenes/Demo
+      1.unity
+    guid: 52a5dc093dd5f2840bcc2e02a16fb1e9
+  - enabled: 1
+    path: Assets/UnityScreenNavigator/~Samples/UnityScreenNavigatorSample/Scenes/Demo
+      2.unity
+    guid: da4175e2ce56d4b2e9f0af3dbd867db4
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 054c7f585f1a7924e87e0dac49081388,
       type: 2}
