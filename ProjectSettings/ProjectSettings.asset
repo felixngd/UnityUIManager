@@ -691,7 +691,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
     0: USN_USE_ASYNC_METHODS;ADDRESSABLES_UNITASK
-    1: USN_USE_ASYNC_METHODS;UNITASK_DOTWEEN_SUPPORT
+    1: USN_USE_ASYNC_METHODS;UNITASK_DOTWEEN_SUPPORT;UI_ANIMATION_TIMELINE_SUPPORT
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
