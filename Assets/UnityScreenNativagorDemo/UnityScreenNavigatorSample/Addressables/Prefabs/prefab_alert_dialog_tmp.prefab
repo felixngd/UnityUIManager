@@ -592,8 +592,8 @@ MonoBehaviour:
   _animationContainer:
     _enterAnimations: []
     _exitAnimations: []
-  titleText: {fileID: 0}
-  messageText: {fileID: 0}
+  titleText: {fileID: 122644677860787836}
+  messageText: {fileID: 4225040495984081118}
   content: {fileID: 8571832741211081454}
   confirmButton: {fileID: 8571832740782411219}
   neutralButton: {fileID: 8571832740662706669}

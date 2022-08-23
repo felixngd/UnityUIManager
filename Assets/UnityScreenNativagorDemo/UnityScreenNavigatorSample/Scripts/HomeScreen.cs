@@ -39,12 +39,14 @@ namespace Demo.Scripts
             AlertDialog.DialogKey = "prefab_alert_dialog";
             var result = await DefaultDialogService.ShowDialog("Hello World", "This is the first dialog in the demo",
                 "OK", "Cancel");
+
+            var button = await result.UserClick.WaitAsync();
             
-            if (result == AlertDialog.BUTTON_POSITIVE)
+            if (button == AlertDialog.ButtonPositive)
             {
                 Debug.Log("Positive button clicked");
             }
-            else if (result == AlertDialog.BUTTON_NEGATIVE)
+            else if (button == AlertDialog.ButtonNegative)
             {
                 Debug.Log("Negative button clicked");
             }
@@ -105,6 +107,13 @@ namespace Demo.Scripts
             var go = Instantiate(result.Value);
             var view = go.GetComponent<SimpleTooltipContent>();
             _buttonTooltip = await Tooltip.Show(string.Empty, view, TipPosition.BottomMiddle,  _showTooltip.image.rectTransform, 50);
+            //Do something after tooltip is shown.
+            Debug.Log("Tooltip shown");
+            var closed = await _buttonTooltip.AfterHide.WaitAsync();
+            if (closed)
+            {
+                Debug.Log("Tooltip closed");
+            }
         }
         
         public void ChangeToolTipText()

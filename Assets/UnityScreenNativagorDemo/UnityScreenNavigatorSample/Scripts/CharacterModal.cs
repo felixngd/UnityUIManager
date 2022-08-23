@@ -5,6 +5,7 @@ using UnityScreenNavigator.Runtime.Core.Modal;
 using UnityScreenNavigator.Runtime.Core.Shared;
 using UnityScreenNavigator.Runtime.Core.Sheet;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Linq;
 
 namespace Demo.Scripts
 {
@@ -73,16 +74,16 @@ namespace Demo.Scripts
             return UniTask.CompletedTask;
         }
 
-        private void OnExpandButtonClicked()
+        private async void OnExpandButtonClicked()
         {
-            var pushOption = new WindowOption(ResourceKey.CharacterImageModalPrefab(), true,
-                onWindowCreated: modal =>
-                {
-                    var characterImageModal = (CharacterImageModal) modal;
-                    characterImageModal.Setup(_characterId, _selectedRank);
-                });
+            var pushOption = new WindowOption(ResourceKey.CharacterImageModalPrefab(), true);
+
             ModalContainer.Find(ContainerKey.ModalContainerLayer)
                 .Push(pushOption);
+            
+            var createdWindow = await pushOption.WindowCreated.WaitAsync();
+            var characterImageModal = (CharacterImageModal) createdWindow;
+            characterImageModal.Setup(_characterId, _selectedRank);
         }
     }
 }

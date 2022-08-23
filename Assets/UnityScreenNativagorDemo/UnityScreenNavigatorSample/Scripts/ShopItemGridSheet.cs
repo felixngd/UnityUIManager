@@ -88,15 +88,15 @@ namespace Demo.Scripts
             return UniTask.CompletedTask;
         }
 
-        private void OnFirstThumbButtonClicked()
+        private async void OnFirstThumbButtonClicked()
         {
             var modalContainer = ModalContainer.Find(ContainerKey.ModalContainerLayer);
-            var pushOption = new WindowOption(ResourceKey.CharacterModalPrefab(), true, onWindowCreated: modal =>
-            {
-                var characterModal = (CharacterModal) modal;
-                characterModal.Setup(_characterId);
-            });
+            var pushOption = new WindowOption(ResourceKey.CharacterModalPrefab(), true);
             modalContainer.Push(pushOption);
+
+            var modal = await pushOption.WindowCreated.WaitAsync();
+            var characterModal = (CharacterModal) modal;
+            characterModal.Setup(_characterId);
         }
     }
 }
