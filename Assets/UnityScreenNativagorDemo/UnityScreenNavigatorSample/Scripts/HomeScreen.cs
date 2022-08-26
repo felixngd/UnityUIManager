@@ -103,10 +103,10 @@ namespace Demo.Scripts
             var str = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
                       "Donec euismod, nisl eget consectetur sagittis, nisl nunc " +
                       "consectetur nisi, euismod aliquam nisi nisl euismod. ";
-            var result = await AddressablesManager.LoadAssetAsync<GameObject>("simple_tooltip_content");
-            var go = Instantiate(result.Value);
-            var view = go.GetComponent<SimpleTooltipContent>();
-            _buttonTooltip = await Tooltip.Show(string.Empty, view, TipPosition.BottomMiddle,  _showTooltip.image.rectTransform, 50);
+            //var result = await AddressablesManager.LoadAssetAsync<GameObject>("simple_tooltip_content");
+            //var go = Instantiate(result.Value);
+            //var view = go.GetComponent<SimpleTooltipContent>();
+            _buttonTooltip = await Tooltip.Show(string.Empty, "view", TipPosition.BottomMiddle,  _showTooltip.image.rectTransform, 50);
             //Do something after tooltip is shown.
             Debug.Log("Tooltip shown");
             var closed = await _buttonTooltip.AfterHide.WaitAsync();

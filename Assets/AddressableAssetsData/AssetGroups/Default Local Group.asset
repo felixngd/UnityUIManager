@@ -16,7 +16,71 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 972c65ce6b3480148958e89ac0452c00
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 6ce9e104e28e6475d855df33e10556b3
+    m_Address: DefaultToast
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5addffb426ca745e8ba2ca4bdc5248a5
+    m_Address: DefaultTooltip
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4fbd1db033a2d4bb59dff325c3170ea9
+    m_Address: prefab_alert_dialog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 425be9792a5dd344fade18732f6504b8
+    m_Address: prefab_demo_hero_info
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 30228440436e2a248b41c61d678f615e
+    m_Address: prefab_demo_modal_backdrop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 786432917d114ba4b96bf12fa7dfd624
+    m_Address: prefab_demo_modal_base
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e7cce3b284923c84b941203f7a850ee5
+    m_Address: prefab_demo_modal_character
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8f167764463a048ff940a7ca52a4baf5
+    m_Address: prefab_demo_modal_character_image
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a8e2c318f514aa342b98505ce1891ea2
+    m_Address: prefab_demo_modal_settings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ff4464df59e5fb5419fe330a2515b135
+    m_Address: prefab_demo_page_home
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7b90dc258f4919a4d8cb0b6cf8db9382
+    m_Address: prefab_demo_page_home_loading
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6a76cb4eb62fd5747831e0071cd8f07b
+    m_Address: prefab_demo_page_shop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 26a0b40ffde6c4c48b92681d4c7c6dde
+    m_Address: prefab_demo_page_top
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5974adbc7566e4544b02a51822ff58b0
+    m_Address: prefab_demo_sheet_character_modal_image
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 032047f25292f2540b40b2d3c21d0605
+    m_Address: prefab_demo_sheet_shop_item_grid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d37830011ca7c4df7a721dfadc73116c
+    m_Address: simple_tooltip_content
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 14e8abed4060b0049808bf147e88b0b5, type: 2}
   m_SchemaSet:
