@@ -34,12 +34,14 @@ namespace Demo.Scripts
             await UniTask.Delay(TimeSpan.FromSeconds(1));
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private async void OnShowAlertDialogClicked()
         {
             AlertDialog.DialogKey = "prefab_alert_dialog";
+            // Show the alert dialog.
             var result = await DefaultDialogService.ShowDialog("Hello World", "This is the first dialog in the demo",
                 "OK", "Cancel");
-
+            // Wait for user to click the button.
             var button = await result.UserClick.WaitAsync();
             
             if (button == AlertDialog.ButtonPositive)

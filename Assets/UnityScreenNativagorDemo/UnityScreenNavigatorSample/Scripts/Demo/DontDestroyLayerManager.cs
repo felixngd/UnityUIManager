@@ -40,7 +40,7 @@ namespace Demo.Scripts.Demo
         void GetTopLayer()
         {
             var topLayer = ContainerLayerManager.GetTopVisibilityLayer();
-            Debug.Log($"Top Layer Name: {topLayer.LayerName}, sorting order {topLayer.Layer}, layerType {topLayer.LayerType}");
+            Debug.Log($"Top Layer Name: {topLayer.LayerName}, sorting order {topLayer.SortOrder}, layerType {topLayer.LayerType}");
         }
         private async UniTask ShowPopup()
         {

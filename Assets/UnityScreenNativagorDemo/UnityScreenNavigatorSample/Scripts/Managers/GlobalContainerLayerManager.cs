@@ -26,7 +26,7 @@ namespace Demo.Scripts.Managers
                 var currentLayer = GetTopVisibilityLayer();
                 if (currentLayer != null)
                 {
-                    if (currentLayer.Layer == 0 && currentLayer.VisibleElementInLayer == 1)
+                    if (currentLayer.SortOrder == 0 && currentLayer.VisibleElementInLayer == 1)
                     {
                         Debug.Log("Application.Quit()");
                         return;

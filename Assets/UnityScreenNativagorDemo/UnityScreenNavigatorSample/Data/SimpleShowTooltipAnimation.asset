@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _delay: 0
   _duration: 0.4
-  _easeType: 24
+  _easeType: 6
   _beforeScale: {x: 0, y: 0, z: 0}
   _beforeAlpha: 0
   _afterScale: {x: 1, y: 1, z: 1}
