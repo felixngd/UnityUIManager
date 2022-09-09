@@ -49,6 +49,13 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "com.timcassell.protopromise": {
+      "version": "https://github.com/TimCassell/ProtoPromise.git?path=ProtoPromise_Unity/Assets/Plugins/ProtoPromise",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c07dd39bed2d6fcac25abdc9e67e33d299656b72"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -76,6 +83,13 @@
       "dependencies": {
         "com.unity.services.core": "1.0.1"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.device-simulator": {
+      "version": "3.0.3-preview",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {

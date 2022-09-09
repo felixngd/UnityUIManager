@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 6275506607628168964}
   - component: {fileID: 4960027252924367179}
   - component: {fileID: 2245201809904586190}
+  - component: {fileID: 2302473879987275696}
   m_Layer: 5
   m_Name: prefab_demo_page_home
   m_TagString: Untagged
@@ -306,6 +307,31 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2302473879987275696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704286536919806819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f269a02320ed4ab1a11752f681b4743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientationType: 0
+  portraitOrDefaultPaddings:
+    left: 0
+    bottom: 0
+    top: 0
+    right: 0
+  landscapePaddings:
+    left: 0
+    bottom: 0
+    top: 0
+    right: 0
+  influence: 1
+  flipPadding: 0
 --- !u!1 &736090159040597230
 GameObject:
   m_ObjectHideFlags: 0

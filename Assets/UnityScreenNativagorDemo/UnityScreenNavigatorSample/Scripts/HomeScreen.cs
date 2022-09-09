@@ -47,14 +47,17 @@ namespace Demo.Scripts
             if (button == AlertDialog.ButtonPositive)
             {
                 Debug.Log("Positive button clicked");
+                //callback
             }
             else if (button == AlertDialog.ButtonNegative)
             {
                 Debug.Log("Negative button clicked");
+                //callback
             }
             else
             {
                 Debug.Log("Neutral button clicked");
+                //callback
             }
         }
 

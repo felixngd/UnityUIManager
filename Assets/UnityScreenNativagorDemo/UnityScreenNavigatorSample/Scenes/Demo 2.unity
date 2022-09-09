@@ -260,8 +260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c697f9df7a9fa249b344cad11942281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preSetScreens:
-  - {fileID: 2014023666}
+  layerName: 
+  canvas: {fileID: 777095660}
 --- !u!114 &777095657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +333,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -359,6 +359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 790109194}
   - component: {fileID: 790109195}
+  - component: {fileID: 790109191}
   m_Layer: 5
   m_Name: LayerContainer
   m_TagString: Untagged
@@ -366,6 +367,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &790109191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790109190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4dc6c6996294d5e87be39d576b3554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentPanel:
+  - {fileID: 777095655}
+  - {fileID: 1864938989}
+  screenCheck: 0
 --- !u!224 &790109194
 RectTransform:
   m_ObjectHideFlags: 0
@@ -442,7 +459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6f2a997d2f45918f39eeb6d284af5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipObject: {fileID: 0}
 --- !u!1 &991728776
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c190a022f83bddc4590f8df228968d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerName: 
+  canvas: {fileID: 1864938994}
   _overrideBackdropPrefab: {fileID: 0}
 --- !u!114 &1864938991
 MonoBehaviour:
@@ -868,15 +886,3 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &2014023666 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 969386060328456982, guid: 26a0b40ffde6c4c48b92681d4c7c6dde,
-    type: 3}
-  m_PrefabInstance: {fileID: 1703432077}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd5895997ff3a543ba9e2e8c4ab4f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
