@@ -22,7 +22,7 @@ namespace Demo.Scripts
 
         private void OnClick()
         {
-            var option = new WindowOption(ResourceKey.HomeLoadingPagePrefab(), true, false);
+            var option = new WindowOption(ResourceKey.HomeLoadingPagePrefab(), true);
             ScreenContainer.Of(transform).Push(option);
         }
     }

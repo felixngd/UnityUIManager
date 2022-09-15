@@ -12,7 +12,7 @@ namespace Demo.Scripts
 
         private void Start()
         {
-            var option = new WindowOption(ResourceKey.TopPagePrefab(), false, loadAsync: false);
+            var option = new WindowOption(ResourceKey.TopPagePrefab(), false);
             screenContainer.Push(option);
         }
     }
