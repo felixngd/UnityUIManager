@@ -1,13 +1,13 @@
 using System;
-using _Samples.UnityScreenNavigatorSample.Scripts.Tooltips;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Modal;
 using UnityScreenNavigator.Runtime.Core.Screen;
 using UnityScreenNavigator.Runtime.Core.Shared;
 using UnityScreenNavigator.Runtime.Interactivity;
+using UnityScreenNavigator.Runtime.Interactivity.Views;
 using Screen = UnityScreenNavigator.Runtime.Core.Screen.Screen;
 
 namespace Demo.Scripts
@@ -37,25 +37,54 @@ namespace Demo.Scripts
         // ReSharper disable Unity.PerformanceAnalysis
         private async void OnShowAlertDialogClicked()
         {
-            AlertDialog.DialogKey = "prefab_alert_dialog";
+            AlertDialog.DialogKey = "prefab_alert_dialog_tmp";
+            AlertDialog.DialogLayer = "Modal_Container";
             // Show the alert dialog.
             var result = await DefaultDialogService.ShowDialog("Hello World", "This is the first dialog in the demo",
                 "OK", "Cancel");
             // Wait for user to click the button.
-            var button = await result.UserClick.WaitAsync();
-            
-            if (button == AlertDialog.ButtonPositive)
+            result.UserClick.Subscribe(b =>
             {
-                Debug.Log("Positive button clicked");
-            }
-            else if (button == AlertDialog.ButtonNegative)
+                if (b == AlertDialog.ButtonPositive)
+                {
+                    Debug.Log("Positive button clicked");
+                    AlertDialog2();
+                }
+                else if (b == AlertDialog.ButtonNegative)
+                {
+                    Debug.Log("Negative button clicked");
+                }
+                else
+                {
+                    Debug.Log("Neutral button clicked");
+                }
+            });
+        }
+        
+        private async void AlertDialog2()
+        {
+            AlertDialog.DialogKey = "prefab_alert_dialog_tmp_2";
+            AlertDialog.DialogLayer = "Modal_Container";
+            // Show the alert dialog.
+            var result = await DefaultDialogService.ShowDialog("New Dialog", "123 456 789",
+                "OK", "Cancel");
+            // Wait for user to click the button.
+            result.UserClick.Subscribe(b =>
             {
-                Debug.Log("Negative button clicked");
-            }
-            else
-            {
-                Debug.Log("Neutral button clicked");
-            }
+                if (b == AlertDialog.ButtonPositive)
+                {
+                    Debug.Log("Positive button clicked");
+                    OnShowAlertDialogClicked();
+                }
+                else if (b == AlertDialog.ButtonNegative)
+                {
+                    Debug.Log("Negative button clicked");
+                }
+                else
+                {
+                    Debug.Log("Neutral button clicked");
+                }
+            });
         }
 
         private void OnShowToastClicked()
@@ -73,10 +102,14 @@ namespace Demo.Scripts
             return UniTask.CompletedTask;
         }
 
-        private void OnSettingButtonClicked()
+        private async void OnSettingButtonClicked()
         {
             var pushOption = new WindowOption(ResourceKey.SettingsModalPrefab(), true);
             ModalContainer.Find(ContainerKey.ModalContainerLayer).Push(pushOption);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+            AlertDialog2();
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+            OnShowAlertDialogClicked();
         }
 
         private void OnShopButtonClicked()

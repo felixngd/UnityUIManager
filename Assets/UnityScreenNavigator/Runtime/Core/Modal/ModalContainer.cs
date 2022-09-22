@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -20,7 +19,6 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
         private static readonly Dictionary<string, ModalContainer> InstanceCacheByName =
             new Dictionary<string, ModalContainer>();
 
-
         [SerializeField] private ModalBackdrop _overrideBackdropPrefab;
 
         private readonly List<ModalBackdrop> _backdrops = new List<ModalBackdrop>();
@@ -38,20 +36,23 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
 
         private ModalBackdrop _backdropPrefab;
 
-        /// <summary>
-        ///     True if in transition.
-        /// </summary>
-        public bool IsInTransition { get; private set; }
-
+        private bool _isInTransition;
+        
         /// <summary>
         ///     Stacked modals.
         /// </summary>
         public IReadOnlyList<Modal> Modals => _modals;
 
-
-        public override Window Current => _modals[_modals.Count - 1];
+        public override Window Current => _modals.Count > 0 ? _modals[_modals.Count - 1] : null;
 
         public override int VisibleElementInLayer => Modals.Count;
+
+        [SerializeField] private bool allowMultiple = true;
+
+        /// <summary>
+        /// Allow multiple modals can be stacked in this container. If set to false, the container will close the current modal before opening the new one.
+        /// </summary>
+        public bool AllowMultiple => allowMultiple;
 
         private void Awake()
         {
@@ -224,23 +225,41 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
         {
             return PopTask(playAnimation);
         }
-
-//string resourceKey, bool playAnimation, Action<Modal> onLoad = null,
-//        bool loadAsync = true
+        
+        // ReSharper disable Unity.PerformanceAnalysis
         private async UniTask<Modal> PushTask(WindowOption option)
         {
-            if (option.ResourcePath == null)
+            if (string.IsNullOrEmpty(option.ResourcePath))
             {
-                throw new ArgumentNullException(nameof(option.ResourcePath));
+                throw new ArgumentException("Path is null or empty.");
             }
 
-            if (IsInTransition)
+            if (_isInTransition)
             {
-                throw new InvalidOperationException(
-                    "Cannot transition because the screen is already in transition.");
+                await UniTask.WaitUntil(() => !_isInTransition);
             }
 
-            IsInTransition = true;
+            //Handle the single container
+            if (!AllowMultiple)
+            {
+                if (Current != null)
+                {
+                    //if the modal has higher priority than the current modal, pop the current modal
+                    if (Current.Priority < option.Priority)
+                    {
+                        if(_modals.Count > 0)
+                        {
+                            await PopTask(false);
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            _isInTransition = true;
 
             var operationResult = await AddressablesManager.LoadAssetAsync<GameObject>(option.ResourcePath);
 
@@ -257,6 +276,7 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
             }
 
             _modalItems.Add(option.ResourcePath);
+            enterModal.Priority = option.Priority;
 
             option.WindowCreated.Value = enterModal;
 
@@ -279,24 +299,19 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
             await enterModal.BeforeEnter(true, exitModal);
 
             // Play Animation
-            var animationTasks = new List<UniTask>();
-            var backdropAnimation = backdrop.Enter(option.PlayAnimation);
-            animationTasks.Add(backdropAnimation);
+
+            await backdrop.Enter(option.PlayAnimation);
 
             if (exitModal != null)
             {
-                var exitAnimation = exitModal.Exit(true, option.PlayAnimation, enterModal);
-                animationTasks.Add(exitAnimation);
+                await exitModal.Exit(true, option.PlayAnimation, enterModal);
             }
 
-            var enterAnimation = enterModal.Enter(true, option.PlayAnimation, exitModal);
-            animationTasks.Add(enterAnimation);
-            await UniTask.WhenAll(animationTasks);
-
+            await enterModal.Enter(true, option.PlayAnimation, exitModal);
 
             // End Transition
             _modals.Add(enterModal);
-            IsInTransition = false;
+            _isInTransition = false;
 
             // Postprocess
             if (exitModal != null)
@@ -315,6 +330,7 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
             return enterModal;
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private async UniTask PopTask(bool playAnimation)
         {
             if (_modals.Count == 0)
@@ -323,13 +339,7 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
                     "Cannot transition because there are no modals loaded on the stack.");
             }
 
-            if (IsInTransition)
-            {
-                throw new InvalidOperationException(
-                    "Cannot transition because the screen is already in transition.");
-            }
-
-            IsInTransition = true;
+            _isInTransition = true;
 
             var exitModal = _modals[_modals.Count - 1];
             var enterModal = _modals.Count == 1 ? null : _modals[_modals.Count - 2];
@@ -351,23 +361,17 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
             }
 
             // Play Animation
-            var animationTasks = new List<UniTask>();
-            var exitAnimation = exitModal.Exit(false, playAnimation, enterModal);
-            animationTasks.Add(exitAnimation);
+            await exitModal.Exit(false, playAnimation, enterModal);
             if (enterModal != null)
             {
-                var enterAnimation = enterModal.Enter(false, playAnimation, exitModal);
-                animationTasks.Add(enterAnimation);
+                await enterModal.Enter(false, playAnimation, exitModal);
             }
 
-            var backDropAnimation = backdrop.Exit(playAnimation);
-            animationTasks.Add(backDropAnimation);
-
-            await UniTask.WhenAll(animationTasks);
+            await backdrop.Exit(playAnimation);
 
             // End Transition
             _modals.RemoveAt(_modals.Count - 1);
-            IsInTransition = false;
+            _isInTransition = false;
 
             // Postprocess
             exitModal.AfterExit(false, enterModal);
@@ -409,16 +413,14 @@ namespace UnityScreenNavigator.Runtime.Core.Modal
             AddressablesManager.ReleaseAsset(resourceKey);
         }
 
-        public override void OnBackButtonPressed()
+        public override UniTask OnBackButtonPressed()
         {
             if (_modals.Count > 0)
             {
-                Pop(true).Forget();
+                return Pop(true);
             }
-        }
 
-        protected override void OnCreate()
-        {
+            return UniTask.CompletedTask;
         }
 
         /// <summary>

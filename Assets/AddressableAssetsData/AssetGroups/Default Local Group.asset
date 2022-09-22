@@ -26,7 +26,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4fbd1db033a2d4bb59dff325c3170ea9
-    m_Address: prefab_alert_dialog
+    m_Address: prefab_alert_dialog_tmp
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 425be9792a5dd344fade18732f6504b8
@@ -79,6 +79,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: d37830011ca7c4df7a721dfadc73116c
     m_Address: simple_tooltip_content
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6f0c7c7ef37ae4768af5abef95779f34
+    m_Address: prefab_alert_dialog_tmp_2
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
