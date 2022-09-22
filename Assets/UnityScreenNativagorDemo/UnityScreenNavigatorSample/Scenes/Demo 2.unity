@@ -359,7 +359,6 @@ GameObject:
   m_Component:
   - component: {fileID: 790109194}
   - component: {fileID: 790109195}
-  - component: {fileID: 790109191}
   m_Layer: 5
   m_Name: LayerContainer
   m_TagString: Untagged
@@ -367,22 +366,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &790109191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790109190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff4dc6c6996294d5e87be39d576b3554, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentPanel:
-  - {fileID: 777095655}
-  - {fileID: 1864938989}
-  screenCheck: 0
 --- !u!224 &790109194
 RectTransform:
   m_ObjectHideFlags: 0
@@ -414,49 +397,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3ebed9a8c6146578343229dab7a6de9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &802587832
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 802587833}
-  - component: {fileID: 802587834}
-  m_Layer: 0
-  m_Name: test_dialog
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &802587833
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802587832}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &802587834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802587832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6f2a997d2f45918f39eeb6d284af5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &991728776
@@ -796,9 +736,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c190a022f83bddc4590f8df228968d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerName: 
+  layerName: Modal_Container
   canvas: {fileID: 1864938994}
   _overrideBackdropPrefab: {fileID: 0}
+  allowMultiple: 1
 --- !u!114 &1864938991
 MonoBehaviour:
   m_ObjectHideFlags: 0

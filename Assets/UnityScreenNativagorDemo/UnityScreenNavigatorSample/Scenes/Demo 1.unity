@@ -383,6 +383,7 @@ MonoBehaviour:
   layerName: DontDestroyModals
   canvas: {fileID: 896643597}
   _overrideBackdropPrefab: {fileID: 0}
+  allowMultiple: 1
 --- !u!114 &896643594
 MonoBehaviour:
   m_ObjectHideFlags: 0
