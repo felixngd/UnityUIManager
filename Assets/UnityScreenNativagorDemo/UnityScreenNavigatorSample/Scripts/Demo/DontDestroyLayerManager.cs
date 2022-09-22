@@ -46,7 +46,7 @@ namespace Demo.Scripts.Demo
         {
             AlertDialog.DialogKey = "prefab_alert_dialog";
             AlertDialog.DialogLayer = "DontDestroyModals";
-            var result = await DefaultDialogService.ShowDialog("Hello World", "This is the first dialog in the demo",
+            var result = await AlertDialog.ShowMessage("Hello World", "This is the first dialog in the demo",
                 "OK", "Cancel");
 
             var button = await result.UserClick.WaitAsync();

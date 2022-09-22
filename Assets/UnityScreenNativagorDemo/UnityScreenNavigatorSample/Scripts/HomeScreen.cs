@@ -7,7 +7,6 @@ using UnityScreenNavigator.Runtime.Core.Modal;
 using UnityScreenNavigator.Runtime.Core.Screen;
 using UnityScreenNavigator.Runtime.Core.Shared;
 using UnityScreenNavigator.Runtime.Interactivity;
-using UnityScreenNavigator.Runtime.Interactivity.Views;
 using Screen = UnityScreenNavigator.Runtime.Core.Screen.Screen;
 
 namespace Demo.Scripts
@@ -40,7 +39,7 @@ namespace Demo.Scripts
             AlertDialog.DialogKey = "prefab_alert_dialog_tmp";
             AlertDialog.DialogLayer = "Modal_Container";
             // Show the alert dialog.
-            var result = await DefaultDialogService.ShowDialog("Hello World", "This is the first dialog in the demo",
+            var result = await AlertDialog.ShowMessage("Hello World", "This is the first dialog in the demo",
                 "OK", "Cancel");
             // Wait for user to click the button.
             result.UserClick.Subscribe(b =>
@@ -66,7 +65,7 @@ namespace Demo.Scripts
             AlertDialog.DialogKey = "prefab_alert_dialog_tmp_2";
             AlertDialog.DialogLayer = "Modal_Container";
             // Show the alert dialog.
-            var result = await DefaultDialogService.ShowDialog("New Dialog", "123 456 789",
+            var result = await AlertDialog.ShowMessage("New Dialog", "123 456 789",
                 "OK", "Cancel");
             // Wait for user to click the button.
             result.UserClick.Subscribe(b =>
