@@ -85,6 +85,86 @@ MonoBehaviour:
     m_Address: prefab_alert_dialog_tmp_2
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 017c7d9973143a84f9fa56ef0a3060b0
+    m_Address: bg_common_popup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b2519aca80419144bb3c206ef4222c07
+    m_Address: tex_character_003_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7a29fb5f9bfad194d92f6d1b163d8a3c
+    m_Address: tex_character_003_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d40e6b08b5e8e1d499950c0b8ab07e91
+    m_Address: tex_character_003_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 14168efe2deda2a45861de4f1e7e1150
+    m_Address: tex_character_004_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4663e5b6aee955b478ecff0cd694cb17
+    m_Address: tex_character_004_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b500bec57ab73e14aa32fd0eaa702600
+    m_Address: tex_character_004_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 35ed26de98dadaf49b4372333e24f693
+    m_Address: tex_character_005_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b79012beb545fc74fb4ec44fd88fc9ff
+    m_Address: tex_character_005_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 64f9161e66e9a49449a6bb84fd65ad62
+    m_Address: tex_character_005_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f2f4f921bc04cdb4686e688852494726
+    m_Address: tex_character_thumb_003_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 20fb725a6e8633448ad5d005ea189746
+    m_Address: tex_character_thumb_003_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c523e5a50c85f024eb6967fab982c579
+    m_Address: tex_character_thumb_003_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4bf105484c1296544bb599522fdf20d4
+    m_Address: tex_character_thumb_004_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2cb5b4cddacae444ba0c895123b06394
+    m_Address: tex_character_thumb_004_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 883e53c0d8f83444fbb0787b4ea8cfa7
+    m_Address: tex_character_thumb_004_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 52be22e54cc72c44fa1b4fd26539feeb
+    m_Address: tex_character_thumb_005_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 60143718140f1264e8f31decb62abcc1
+    m_Address: tex_character_thumb_005_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d8fdfed5da8ec704282f0b916f97f821
+    m_Address: tex_character_thumb_005_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d9be1bac98a7b4807b4a3c15fa539226
+    m_Address: tooltip_bg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 14e8abed4060b0049808bf147e88b0b5, type: 2}
   m_SchemaSet:
