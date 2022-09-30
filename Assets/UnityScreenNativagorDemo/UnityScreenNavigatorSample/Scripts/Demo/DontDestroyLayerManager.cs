@@ -15,27 +15,27 @@ namespace Demo.Scripts.Demo
             DontDestroyOnLoad(gameObject);
         }
 
-        private void OnGUI()
-        {
-            //Button
-            if (GUI.Button(new Rect(10, 10, 200, 50), "Show Popup"))
-            {
-                ShowPopup();
-            }
-            
-            //load new scene
-            if (GUI.Button(new Rect(10, 50, 200, 50), "Load New Scene"))
-            {
-                LoadNewScene();
-            }
-            
-            //get top layer
-            if (GUI.Button(new Rect(10, 100, 200, 50), "Get Top Layer"))
-            {
-                GetTopLayer();
-            }
-            
-        }
+        // private void OnGUI()
+        // {
+        //     //Button
+        //     if (GUI.Button(new Rect(10, 10, 200, 50), "Show Popup"))
+        //     {
+        //         ShowPopup();
+        //     }
+        //     
+        //     //load new scene
+        //     if (GUI.Button(new Rect(10, 50, 200, 50), "Load New Scene"))
+        //     {
+        //         LoadNewScene();
+        //     }
+        //     
+        //     //get top layer
+        //     if (GUI.Button(new Rect(10, 100, 200, 50), "Get Top Layer"))
+        //     {
+        //         GetTopLayer();
+        //     }
+        //     
+        // }
 
         void GetTopLayer()
         {

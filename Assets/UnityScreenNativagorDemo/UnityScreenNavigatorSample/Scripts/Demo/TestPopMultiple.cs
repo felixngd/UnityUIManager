@@ -18,6 +18,11 @@ namespace Demo.Scripts.Demo
             {
                 ScreenContainer.Find(ContainerKey.MainContainerLayer).PopTo("prefab_demo_page_top", true).Forget();
             }
+            
+            if (GUILayout.Button("Pop All"))
+            {
+                ScreenContainer.Find(ContainerKey.MainContainerLayer).PopAll().Forget();
+            }
         }
     }
 }
