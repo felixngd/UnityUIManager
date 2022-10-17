@@ -104,7 +104,9 @@ namespace Demo.Scripts
         private async void OnSettingButtonClicked()
         {
             var pushOption = new WindowOption(ResourceKey.SettingsModalPrefab(), true);
-            ModalContainer.Find(ContainerKey.ModalContainerLayer).Push(pushOption);
+            var option = ModalContainer.Find(ContainerKey.ModalContainerLayer).Push(pushOption);
+            
+            
             await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
             AlertDialog2();
             await UniTask.Delay(TimeSpan.FromSeconds(0.1f));

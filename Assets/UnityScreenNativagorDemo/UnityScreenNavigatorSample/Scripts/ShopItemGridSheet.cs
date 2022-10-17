@@ -1,6 +1,6 @@
+using AddressableAssets.Loaders;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Modal;
 using UnityScreenNavigator.Runtime.Core.Shared;
@@ -13,7 +13,7 @@ namespace Demo.Scripts
     {
         [SerializeField] private Image _thumbnailImage;
         [SerializeField] private Button _firstThumbButton;
-
+        private readonly IAssetsKeyLoader<Sprite> _loader = new AssetsKeyLoader<Sprite>();
         private int _characterId;
 
         public void Setup(int index, int characterId)
@@ -26,8 +26,8 @@ namespace Demo.Scripts
         public override async UniTask Initialize()
         {
             var key = ResourceKey.CharacterThumbnailSprite(_characterId, 1);
-            var operationResult = await AddressablesManager.LoadAssetAsync<Sprite>(key);
-            _thumbnailImage.sprite = operationResult.Value;
+            var operationResult = await _loader.LoadAssetAsync(key);
+            _thumbnailImage.sprite = operationResult;
             _firstThumbButton.onClick.AddListener(OnFirstThumbButtonClicked);
         }
 
@@ -84,7 +84,7 @@ namespace Demo.Scripts
         {
             _firstThumbButton.onClick.RemoveListener(OnFirstThumbButtonClicked);
             var key = ResourceKey.CharacterThumbnailSprite(_characterId, 1);
-            AddressablesManager.ReleaseAsset(key);
+            _loader.UnloadAsset(key);
             return UniTask.CompletedTask;
         }
 

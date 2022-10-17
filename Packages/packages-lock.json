@@ -14,14 +14,15 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
-    "com.grashaar.unity-objectpooling": {
-      "version": "https://github.com/felixngd/Unity.ObjectPooling.git#1.5.2",
+    "com.dre0dru.addressables.services": {
+      "version": "https://github.com/felixngd/AddressablesServices.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.laicasaane.unity-supplements": "2.6.0"
+        "com.cysharp.unitask": "2.2.5",
+        "com.unity.addressables": "1.18.19"
       },
-      "hash": "d7cfbc00cbdbff9cbecfc3da95dcaf840d96732c"
+      "hash": "c6c694345ba79ef15aa34a4b5245e4ffa18cf799"
     },
     "com.harumak.unityuiplayables": {
       "version": "https://github.com/Haruma-K/UnityUIPlayables.git?path=/Assets/UnityUIPlayables",
@@ -32,15 +33,6 @@
         "com.unity.timeline": "1.2.14"
       },
       "hash": "799efe48dc0a6990e8a1d7a2372415a11fa8dfbc"
-    },
-    "com.laicasaane.unity-addressables-manager": {
-      "version": "https://github.com/felixngd/unity-addressables-manager.git#1.2.3",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.addressables": "1.6.0"
-      },
-      "hash": "11e45e9795d1e2226e6dfaa3549193be329c3169"
     },
     "com.laicasaane.unity-supplements": {
       "version": "2.6.0",
@@ -77,19 +69,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "1.15.15",
+      "version": "1.17.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.services.core": "1.0.1"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.device-simulator": {
-      "version": "3.0.3-preview",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
@@ -100,7 +85,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.13",
+      "version": "3.0.15",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -109,7 +94,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.14",
+      "version": "2.0.16",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -124,19 +109,28 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.0.2",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.6",
+      "version": "1.20.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {
-      "version": "1.0.1",
+      "version": "1.4.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0"
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.modules.androidjni": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
