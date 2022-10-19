@@ -1,15 +1,15 @@
+using AddressableAssets.Loaders;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Sheet;
 using Cysharp.Threading.Tasks;
-using UnityEngine.AddressableAssets;
 
 namespace Demo.Scripts
 {
     public class CharacterModalImageSheet : Sheet
     {
         [SerializeField] private Image _image;
-
+        private readonly IAssetsKeyLoader<Sprite> _loader = new AssetsKeyLoader<Sprite>();
         private int _characterId;
         private int _rank;
 
@@ -21,9 +21,14 @@ namespace Demo.Scripts
 
         public override async UniTask WillEnter()
         {
-            var handle =
-                await AddressablesManager.LoadAssetAsync<Sprite>(ResourceKey.CharacterSprite(_characterId, _rank));
-            _image.sprite = handle.Value;
+            var handle = await _loader.LoadAssetAsync(ResourceKey.CharacterSprite(_characterId, _rank));
+            _image.sprite = handle;
+        }
+
+        public override UniTask Cleanup()
+        {
+            _loader.UnloadAllAssets();
+            return base.Cleanup();
         }
     }
 }

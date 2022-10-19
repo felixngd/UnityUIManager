@@ -57,16 +57,12 @@ namespace UnityScreenNavigator.Runtime.Interactivity.Views
             }
         }
 
-        private Tooltip _tooltip;
-
-        public Tooltip Tooltip
-        {
-            get => _tooltip;
-            set => _tooltip = value;
-        }
+        public Tooltip Tooltip { get; set; }
 
         protected virtual async void Close()
         {
+            if(Tooltip.LockClose)
+                return;
             //play Exit animation
             var exitAnim = transitionAnimationContainer.GetAnimation(false);
             if (exitAnim == null)
@@ -101,6 +97,10 @@ namespace UnityScreenNavigator.Runtime.Interactivity.Views
         protected override void Start()
         {
             base.Start();
+            Tooltip.Message?.BindTo(messageText);
+            
+            Tooltip.CloseOnCancelClick.Subscribe(b => closeButton.gameObject.SetActive(b));
+            closeButton.onClick.AddListener(Close);
 
             UniTaskAsyncEnumerable.EveryUpdate().ForEachAsync(_ =>
                 {
@@ -113,11 +113,6 @@ namespace UnityScreenNavigator.Runtime.Interactivity.Views
                     }
                 },
                 gameObject.GetCancellationTokenOnDestroy());
-
-            Tooltip.Message?.BindTo(messageText);
-            
-            Tooltip.CloseOnCancelClick.Subscribe(b => closeButton.gameObject.SetActive(b));
-            closeButton.onClick.AddListener(Close);
         }
 
         protected override void OnDestroy()

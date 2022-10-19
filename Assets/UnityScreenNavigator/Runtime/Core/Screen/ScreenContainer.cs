@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using AddressableAssets.Loaders;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using UnityScreenNavigator.Runtime.Core.Shared;
 using UnityScreenNavigator.Runtime.Core.Shared.Layers;
@@ -24,6 +24,7 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
 
         //controls load and unload of resources
         private readonly List<string> _screenItems = new List<string>(5);
+        private readonly IAssetsKeyLoader<GameObject> _assetsKeyLoader = new AssetsKeyLoader<GameObject>();
 
         //Controls the visibility of the screens, the last one is always visible
         private readonly List<Screen> _screenList = new List<Screen>(5);
@@ -31,11 +32,7 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
         private readonly List<string> _preloadAssetKeys = new List<string>(5);
 
         private bool _isActiveScreenStacked;
-
-        /// <summary>
-        /// True if in transition.
-        /// </summary>
-        public bool IsInTransition { get; private set; }
+        private bool _isInTransition;
 
         /// <summary>
         ///     Stacked screens.
@@ -53,17 +50,13 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
         {
             foreach (var preloadAssetKey in _preloadAssetKeys)
             {
-                AddressablesManager.ReleaseAsset(preloadAssetKey);
+                _assetsKeyLoader.UnloadAsset(preloadAssetKey);
             }
-
             _preloadAssetKeys.Clear();
-            foreach (var item in _screenItems)
-            {
-                AddressablesManager.ReleaseAsset(item);
-            }
-
+            
+            _assetsKeyLoader.UnloadAllAssets();
             _screenItems.Clear();
-
+            
             InstanceCacheByName.Remove(LayerName);
             var keysToRemove = new List<int>();
             foreach (var cache in InstanceCacheByTransform)
@@ -73,7 +66,7 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
             foreach (var keyToRemove in keysToRemove) InstanceCacheByTransform.Remove(keyToRemove);
         }
 
-        public override Window Current => _screenList[_screenList.Count - 1];
+        public override Window Current => _screenList.Count > 0 ? _screenList[_screenList.Count - 1] : null;
 
         public override int VisibleElementInLayer => Screens.Count;
 
@@ -119,16 +112,17 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
         {
             if (option.ResourcePath == null) throw new ArgumentNullException(nameof(option.ResourcePath));
 
-            if (IsInTransition)
-                throw new InvalidOperationException(
-                    "Cannot transition because the screen is already in transition.");
+            if (_isInTransition)
+            {
+                await UniTask.WaitUntil(() => !_isInTransition);
+            }
 
-            IsInTransition = true;
+            _isInTransition = true;
 
             // Setup
-            var operationResult = await AddressablesManager.LoadAssetAsync<GameObject>(option.ResourcePath);
+            var operationResult = await _assetsKeyLoader.LoadAssetAsync(option.ResourcePath);
 
-            var instance = Instantiate(operationResult.Value);
+            var instance = Instantiate(operationResult);
             var enterScreen = instance.GetComponent<Screen>();
             if (enterScreen == null)
                 throw new InvalidOperationException(
@@ -157,9 +151,16 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
             await enterScreen.BeforeEnter(true, exitScreen);
 
             // Play Animations
-            if (exitScreen != null) await exitScreen.Exit(true, option.PlayAnimation, enterScreen);
+            var animationTasks = new List<UniTask>();
+            if (exitScreen != null)
+            {
+                var exitAnimation = exitScreen.Exit(true, option.PlayAnimation, enterScreen);
+                animationTasks.Add(exitAnimation);
+            }
 
-            await enterScreen.Enter(true, option.PlayAnimation, exitScreen);
+            var enterAnimation = enterScreen.Enter(true, option.PlayAnimation, exitScreen);
+            animationTasks.Add(enterAnimation);
+            await UniTask.WhenAll(animationTasks);
 
 
             // End Transition
@@ -169,7 +170,7 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
             }
 
             _screenList.Add(enterScreen);
-            IsInTransition = false;
+            _isInTransition = false;
 
             // Postprocess
             if (exitScreen != null) exitScreen.AfterExit(true, enterScreen);
@@ -184,7 +185,7 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
                 var beforeReleaseHandle = exitScreen.BeforeRelease();
                 await beforeReleaseHandle;
 
-                AddressablesManager.ReleaseAsset(_screenItems[_screenItems.Count - 2]);
+                _assetsKeyLoader.UnloadAsset(_screenItems[^2]);
                 _screenItems.RemoveAt(_screenItems.Count - 2);
                 Destroy(exitScreen.gameObject);
             }
@@ -200,14 +201,10 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
                 throw new InvalidOperationException(
                     "Cannot transition because there are no screens loaded on the stack.");
 
-            if (IsInTransition)
-                throw new InvalidOperationException(
-                    "Cannot transition because the screen is already in transition.");
+            _isInTransition = true;
 
-            IsInTransition = true;
-
-            var exitScreen = _screenList[_screenList.Count - 1];
-            var enterScreen = _screenList.Count == 1 ? null : _screenList[_screenList.Count - 2];
+            var exitScreen = _screenList[^1];
+            var enterScreen = _screenList.Count == 1 ? null : _screenList[^2];
 
             // Preprocess
             foreach (var callbackReceiver in _callbackReceivers) callbackReceiver.BeforePop(enterScreen, exitScreen);
@@ -216,12 +213,20 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
             if (enterScreen != null) await enterScreen.BeforeEnter(false, exitScreen);
 
             // Play Animations
-            await exitScreen.Exit(false, playAnimation, enterScreen);
-            if (enterScreen != null) await enterScreen.Enter(false, playAnimation, exitScreen);
+            var animationTasks = new List<UniTask>();
+            var exitAnimation = exitScreen.Exit(false, playAnimation, enterScreen);
+            animationTasks.Add(exitAnimation);
+            if (enterScreen != null)
+            {
+                var enterAnimation = enterScreen.Enter(false, playAnimation, exitScreen);
+                animationTasks.Add(enterAnimation);
+            }
+
+            await UniTask.WhenAll(animationTasks);
 
             // End Transition
             _screenList.RemoveAt(_screenList.Count - 1);
-            IsInTransition = false;
+            _isInTransition = false;
 
             // Postprocess
             exitScreen.AfterExit(false, enterScreen);
@@ -233,11 +238,73 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
             var beforeReleaseTask = exitScreen.BeforeRelease();
             await beforeReleaseTask;
 
-            AddressablesManager.ReleaseAsset(_screenItems[_screenItems.Count - 1]);
+            _assetsKeyLoader.UnloadAsset(_screenItems[^1]);
             _screenItems.RemoveAt(_screenItems.Count - 1);
             Destroy(exitScreen.gameObject);
 
             _isActiveScreenStacked = true;
+        }
+
+        /// <summary>
+        /// Pop to the specified screen.
+        /// </summary>
+        /// <param name="identifier"></param>
+        /// <param name="playAnimationAtLast"></param>
+        public async UniTask PopTo(string identifier, bool playAnimationAtLast = false)
+        {
+            int count = 0;
+            for (var i = _screenList.Count - 1; i >= 0; i--)
+            {
+                if (_screenList[i].Identifier == identifier)
+                {
+                    count = _screenList.Count - i - 1;
+                    break;
+                }
+            }
+
+            if (count == 0)
+            {
+                Debug.LogWarning($"Cannot pop to {identifier} because it is not in the stack.");
+                return;
+            }
+            for (var i = 0; i < count; i++)
+            {
+                if(playAnimationAtLast && i == count - 1)
+                    await PopTask(true);
+                else
+                    await PopTask(false);
+            }
+        }
+        /// <summary>
+        /// Pop all screens except the first screen in the stack.
+        /// </summary>
+        public async UniTask PopToRoot(bool playAnimationAtLast = false)
+        {
+            if (_screenList.Count == 0) return;
+
+            var screenCountToPop = _screenList.Count - 1;
+
+            for (var i = 0; i < screenCountToPop; i++)
+            {
+                if (playAnimationAtLast && i == screenCountToPop - 1)
+                    await PopTask(true);
+                else
+                    await PopTask(false);
+            }
+        }
+        /// <summary>
+        /// Pop all screens in the stack.
+        /// </summary>
+        public async UniTask PopAll()
+        {
+            if (_screenList.Count == 0) return;
+
+            var screenCountToPop = _screenList.Count;
+
+            for (var i = 0; i < screenCountToPop; i++)
+            {
+                await PopTask(false);
+            }
         }
 
         #region STATIC_METHODS
@@ -339,6 +406,12 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
                 InstanceCacheByName.Add(LayerName, this);
                 ContainerLayerManager.Add(this);
             }
+            // var screens = GetComponentsInChildren<Screen>(true);
+            // foreach (var screen in screens)
+            // {
+            //     _screenList.Add(screen);
+            //     _screenItems.Add(screen.Identifier);
+            // }
         }
 
         #endregion
@@ -353,29 +426,24 @@ namespace UnityScreenNavigator.Runtime.Core.Screen
 
         private UniTask PreloadTask(string resourceKey)
         {
-            return AddressablesManager.LoadAssetAsync<GameObject>(resourceKey);
+            return _assetsKeyLoader.LoadAssetAsync(resourceKey);
         }
 
         public void ReleasePreloaded(string resourceKey)
         {
+            _assetsKeyLoader.UnloadAsset(resourceKey);
             _preloadAssetKeys.Remove(resourceKey);
-            AddressablesManager.ReleaseAsset(resourceKey);
         }
 
         #endregion
 
-
-        public override void OnBackButtonPressed()
+        public override async UniTask OnBackButtonPressed()
         {
-            if (IsInTransition) return;
+            if (_isInTransition) return;
             if (_screenList.Count > 1)
             {
-                Pop(true).Forget();
+                await Pop(true);
             }
-        }
-
-        protected override void OnCreate()
-        {
         }
     }
 }

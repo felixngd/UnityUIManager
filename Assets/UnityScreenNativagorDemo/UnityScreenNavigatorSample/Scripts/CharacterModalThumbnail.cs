@@ -1,4 +1,5 @@
 using System;
+using AddressableAssets.Loaders;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,6 +11,8 @@ namespace Demo.Scripts
     {
         [SerializeField] private Image _image;
         [SerializeField] private Button _button;
+        
+        private readonly IAssetsKeyLoader<Sprite> _loader = new AssetsKeyLoader<Sprite>();
 
         private void Awake()
         {
@@ -19,6 +22,7 @@ namespace Demo.Scripts
         private void OnDestroy()
         {
             _button.onClick.RemoveListener(OnClicked);
+            _loader.UnloadAllAssets();
         }
 
         public event Action Clicked;
@@ -26,8 +30,8 @@ namespace Demo.Scripts
         public async UniTask Setup(int id, int rank)
         {
             var sprite =
-                await AddressablesManager.LoadAssetAsync<Sprite>(ResourceKey.CharacterThumbnailSprite(id, rank));
-            _image.sprite = sprite.Value;
+                await _loader.LoadAssetAsync(ResourceKey.CharacterThumbnailSprite(id, rank));
+            _image.sprite = sprite;
         }
 
         private void OnClicked()
