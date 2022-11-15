@@ -20,7 +20,7 @@ namespace UnityScreenNavigator.Runtime.Interactivity
         private readonly Action _callback;
         private readonly UILayout _layout;
         private readonly IUIViewGroup _viewGroup;
-        
+
         private static readonly List<Toast> Toasts = new List<Toast>();
         private static readonly IAssetsKeyLoader<GameObject> AssetsKeyLoader = new AssetsKeyLoader<GameObject>();
         protected Toast(ToastView view, IUIViewGroup viewGroup, string message, float duration) : this(view, viewGroup,
@@ -39,6 +39,18 @@ namespace UnityScreenNavigator.Runtime.Interactivity
             _callback = callback;
         }
 
+        private Toast(ToastView view, IUIViewGroup viewGroup, string message, Color color, float duration, UILayout layout,
+            Action callback = null)
+        {
+            View = view;
+            _viewGroup = viewGroup;
+            Message = message;
+            ColorPicked = color;
+            Duration = duration;
+            _layout = layout;
+            _callback = callback;
+        }
+
         public static string ToastKey
         {
             get => string.IsNullOrEmpty(_toastKey) ? DEFAULT_VIEW_NAME : _toastKey;
@@ -48,6 +60,8 @@ namespace UnityScreenNavigator.Runtime.Interactivity
         public float Duration { get; }
 
         public string Message { get; }
+
+        public Color ColorPicked { get; }
 
         public ToastView View { get; }
 
@@ -61,6 +75,11 @@ namespace UnityScreenNavigator.Runtime.Interactivity
         public static UniTask<Toast> Show(string text, float duration = 3f)
         {
             return Show(ToastKey, null, text, duration, null, null);
+        }
+
+        public static UniTask<Toast> Show(string text, Color color, float duration = 3f)
+        {
+            return Show(ToastKey, null, text, color, duration, null, null);
         }
 
         public static UniTask<Toast> Show(string text, float duration, UILayout layout)
@@ -88,12 +107,12 @@ namespace UnityScreenNavigator.Runtime.Interactivity
         {
             return Show(ToastKey, viewGroup, text, duration, layout, callback);
         }
-        
+
         public static UniTask<Toast> Show(string key, IUIViewGroup viewGroup, string text, float duration = 3f)
         {
             return Show(key, viewGroup, text, duration, null, null);
         }
-        
+
         public static UniTask<Toast> Show(string key, string text, float duration)
         {
             return Show(key, null, text, duration, null, null);
@@ -110,7 +129,7 @@ namespace UnityScreenNavigator.Runtime.Interactivity
             }
             if (string.IsNullOrEmpty(viewName))
                 viewName = ToastKey;
-            
+
             var contentGo = await AssetsKeyLoader.LoadAssetAsync(viewName);
             if (contentGo == null)
                 throw new Exception($"Toast view is not found. viewName: {viewName}");
@@ -125,6 +144,33 @@ namespace UnityScreenNavigator.Runtime.Interactivity
             return toast;
         }
 
+        private static async UniTask<Toast> Show(string viewName, IUIViewGroup viewGroup, string text, Color color, float duration,
+            UILayout layout, Action callback)
+        {
+            //Cancel all existing toasts
+            foreach (var t in Toasts)
+            {
+                t.View.Visibility = false;
+                await t.Cancel(default);
+            }
+            if (string.IsNullOrEmpty(viewName))
+                viewName = ToastKey;
+
+            var contentGo = await AssetsKeyLoader.LoadAssetAsync(viewName);
+            if (contentGo == null)
+                throw new Exception($"Toast view is not found. viewName: {viewName}");
+            var viewGo = Object.Instantiate(contentGo);
+            var view = viewGo.GetComponent<ToastView>();
+            if (viewGroup == null)
+                viewGroup = GetCurrentViewGroup();
+
+            var toast = new Toast(view, viewGroup, text, color, duration, layout, callback);
+            Toasts.Add(toast);
+            await toast.ShowToastColorPicked(view.GetCancellationTokenOnDestroy());
+            return toast;
+        }
+
+
         // ReSharper disable Unity.PerformanceAnalysis
         public async UniTask Cancel(CancellationToken cancellationToken)
         {
@@ -136,7 +182,7 @@ namespace UnityScreenNavigator.Runtime.Interactivity
                 Object.Destroy(View);
                 return;
             }
-            
+
             await View.PlayExitAnimation(cancellationToken);
             Object.Destroy(View);
             DoCallback();
@@ -146,6 +192,16 @@ namespace UnityScreenNavigator.Runtime.Interactivity
         {
             _viewGroup.AddView(View, _layout);
             View.SetMessage(Message);
+
+            await View.PlayEnterAnimation(cancellationToken);
+
+            await DelayDismiss(Duration, cancellationToken);
+        }
+
+        private async UniTask ShowToastColorPicked(CancellationToken cancellationToken)
+        {
+            _viewGroup.AddView(View, _layout);
+            View.SetMessage(Message, ColorPicked);
 
             await View.PlayEnterAnimation(cancellationToken);
 
